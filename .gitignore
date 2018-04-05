@@ -299,6 +299,9 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# NPM
+package-lock.json
+
 # Typescript v1 declaration files
 typings/
 
