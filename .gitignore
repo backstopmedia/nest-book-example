@@ -302,6 +302,9 @@ node_modules/
 # NPM
 package-lock.json
 
+# BINARIES
+dist/
+
 # Typescript v1 declaration files
 typings/
 
