@@ -14,7 +14,6 @@ export class AuthenticationMiddleware implements NestMiddleware {
 
                 const user = await this.userService.findOne({ where: { email }});
                 req.user = user;
-                console.log(req.user);
                 return next();
             })(req, res, next);
         };
