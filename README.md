@@ -1,10 +1,9 @@
 # nest-book-example
 
-## Setup database
+## Starting the development environment
 
-Before using the project you have to setup a new database, for that you need to execute `psql` and then :   
-`CREATE DATABASE nestbook;`  
-`CREATE USER nest WITH PASSWORD 'nest';`
+### With Docker
 
-you can of course change all the naming and put the naming you want and store them as env variable until we add
-the `.env` support
+We provide a Docker Compose file to get you up and running as fast as possible. Just run `docker-compose up` on your command line and you'll be able to access your Nest.js app on http://localhost:3000.
+
+Also, we are using Nodemon to make sure the Node.js app is restarted automatically whenever you save any file.

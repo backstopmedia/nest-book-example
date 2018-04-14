@@ -7,8 +7,8 @@ import { databaseConfig } from './src/shared/config/dataBase.config';
 import { Sequelize } from 'sequelize-typescript';
 import * as Umzug from 'umzug';
 
-const DB_NAME = process.env.DB_NAME || 'nest';
-const DB_USER = process.env.DB_USER || 'nest';
+const DB_NAME = process.env.POSTGRES_DB || 'postgres';
+const DB_USER = process.env.POSTGRES_USER || 'postgres';
 
 let config;
 switch (process.env.NODE_ENV) {

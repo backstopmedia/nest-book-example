@@ -1,0 +1,60 @@
+version: '3'
+
+volumes:
+  # for persistence between restarts
+  postgres_data: {}
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "30000:5432"
+    environment:
+      POSTGRES_USER: nest
+      POSTGRES_PASSWORD: nest
+      POSTGRES_DB: nestbook
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      DB_HOST: db
+      POSTGRES_USER: nest
+      POSTGRES_PASSWORD: nest
+      POSTGRES_DB: nestbook
+      POSTGRES_PORT: 5432
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: >
+      npm run start:dev
+      && npm run migrate up
+  migration:
+    build: .
+    image: api
+    command: npm run migrate up
+    environment:
+      DB_HOST: db
+      POSTGRES_USER: nest
+      POSTGRES_PASSWORD: nest
+      POSTGRES_DB: nestbook
+      POSTGRES_PORT: 5432
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - api
+    links:
+      - db
