@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, HttpStatus, Req, Res } from '@nestjs/common';
+import {Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param} from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller()
@@ -12,17 +12,15 @@ export class UserController {
     }
 
     @Post('users')
-    public async create(@Req() req, @Res() res) {
-        const body = req.body;
+    public async create(@Body() body: any, @Res() res) {
         if (!body || (body && Object.keys(body).length === 0)) throw new Error('Missing some information.');
 
-        await this.userService.create(req.body);
+        await this.userService.create(body);
         return res.status(HttpStatus.CREATED).send();
     }
 
     @Get('users/:id')
-    public async show(@Req() req, @Res() res) {
-        const id = req.params.id;
+    public async show(@Param() id: number, @Res() res) {
         if (!id) throw new Error('Missing id.');
 
         const user = await this.userService.findById(id);
@@ -30,17 +28,15 @@ export class UserController {
     }
 
     @Put('users/:id')
-    public async update(@Req() req, @Res() res) {
-        const id = req.params.id;
+    public async update(@Param() id: number, @Body() body: any, @Res() res) {
         if (!id) throw new Error('Missing id.');
 
-        await this.userService.update(id, req.body);
+        await this.userService.update(id, body);
         return res.status(HttpStatus.OK).send();
     }
 
     @Delete('users/:id')
-    public async delete(@Req() req, @Res() res) {
-        const id = req.params.id;
+    public async delete(@Param() id: number, @Res() res) {
         if (!id) throw new Error('Missing id.');
 
         await this.userService.delete(id);

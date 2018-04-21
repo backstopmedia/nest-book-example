@@ -1,6 +1,6 @@
-import { Controller, Post, HttpStatus, HttpCode, Req, Res } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { AuthenticationService } from './authentication.service';
+import { Controller, Post, HttpStatus, HttpCode, Res, Body } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 
 @Controller()
@@ -11,8 +11,7 @@ export class AuthenticationController {
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    public async login(@Req() req, @Res() res): Promise<any> {
-        const body = req.body;
+    public async login(@Body() body: any, @Res() res): Promise<any> {
         if (!body.email || !body.password) {
             return res.status(HttpStatus.BAD_REQUEST).send('Missing email or password.');
         }
