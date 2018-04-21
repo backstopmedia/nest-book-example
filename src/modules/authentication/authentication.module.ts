@@ -1,21 +1,26 @@
-import { Module, NestModule, RequestMethod } from '@nestjs/common';
-import { JwtStrategy } from './passport/index';
-import { AuthenticationService } from './authentication.service';
-import { UserModule } from '../user/user.module';
 import { AuthenticationController } from './authentication.controller';
-import {AuthenticationMiddleware} from './middlewares/authentication.middleware';
+import { AuthenticationService } from './authentication.service';
+import { DynamicModule, Module } from '@nestjs/common';
+import { UserModule } from '../user/user.module';
 
-@Module({
-    imports: [UserModule],
-    controllers: [AuthenticationController],
-    components: [
-        AuthenticationService,
-        AuthenticationMiddleware,
-        JwtStrategy
-    ],
-    exports: [
-        JwtStrategy,
-        AuthenticationMiddleware
-    ]
-})
-export class AuthenticationModule {}
+@Module({})
+export class AuthenticationModule {
+    static forRoot(strategy?: 'jwt'): DynamicModule {
+        strategy = 'jwt';
+        const strategyProvider = {
+            provide: 'Strategy',
+            useFactory: async (authenticationService: AuthenticationService) => {
+                const Strategy = (await import (`./passports/${strategy}.strategy`)).default;
+                return new Strategy(authenticationService);
+            },
+            inject: [AuthenticationService]
+        };
+        return {
+            module: AuthenticationModule,
+            imports: [UserModule],
+            controllers: [AuthenticationController],
+            components: [AuthenticationService, strategyProvider],
+            exports: [strategyProvider]
+        };
+    }
+}

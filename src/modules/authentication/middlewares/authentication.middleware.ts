@@ -6,9 +6,9 @@ import { UserService } from '../../user/user.service';
 export class AuthenticationMiddleware implements NestMiddleware {
     constructor(private userService: UserService) { }
 
-    async resolve(...args: any[]): Promise<ExpressMiddleware> {
+    async resolve(strategy: string): Promise<ExpressMiddleware> {
         return async (req, res, next) => {
-            return passport.authenticate('jwt', async (...args: any[]) => {
+            return passport.authenticate(strategy, async (...args: any[]) => {
                 const [,  payload, err] = args;
                 if (err) {
                     return res.status(HttpStatus.BAD_REQUEST).send('Unable to authenticate the user.');

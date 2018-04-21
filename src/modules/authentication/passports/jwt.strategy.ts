@@ -4,7 +4,7 @@ import { Component } from '@nestjs/common';
 import { AuthenticationService } from '../authentication.service';
 
 @Component()
-export class JwtStrategy extends Strategy {
+export default class JwtStrategy extends Strategy {
     constructor(private readonly authenticationService: AuthenticationService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
