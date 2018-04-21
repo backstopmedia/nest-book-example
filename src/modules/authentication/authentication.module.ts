@@ -6,7 +6,7 @@ import { UserModule } from '../user/user.module';
 @Module({})
 export class AuthenticationModule {
     static forRoot(strategy?: 'jwt'): DynamicModule {
-        strategy = 'jwt';
+        strategy = strategy ? strategy :'jwt';
         const strategyProvider = {
             provide: 'Strategy',
             useFactory: async (authenticationService: AuthenticationService) => {
