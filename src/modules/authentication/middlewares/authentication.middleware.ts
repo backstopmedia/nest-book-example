@@ -1,4 +1,4 @@
-import { Middleware, NestMiddleware, ExpressMiddleware } from '@nestjs/common';
+import {Middleware, NestMiddleware, ExpressMiddleware, HttpStatus} from '@nestjs/common';
 import * as passport from 'passport';
 import { UserService } from '../../user/user.service';
 
@@ -8,11 +8,13 @@ export class AuthenticationMiddleware implements NestMiddleware {
 
     async resolve(...args: any[]): Promise<ExpressMiddleware> {
         return async (req, res, next) => {
-            console.log('toto');
-            return passport.authenticate('jwt', async (err, { email }) => {
-                if (err) throw new Error(err);
+            return passport.authenticate('jwt', async (...args: any[]) => {
+                const [,  payload, err] = args;
+                if (err) {
+                    return res.status(HttpStatus.BAD_REQUEST).send('Unable to authenticate the user.');
+                }
 
-                const user = await this.userService.findOne({ where: { email }});
+                const user = await this.userService.findOne({ where: { email: payload.email }});
                 req.user = user;
                 return next();
             })(req, res, next);
