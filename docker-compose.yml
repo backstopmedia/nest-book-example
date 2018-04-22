@@ -40,21 +40,3 @@ services:
       - /app/node_modules
     command: >
       npm run start:dev
-      && npm run migrate up
-  migration:
-    build: .
-    image: api
-    command: npm run migrate up
-    environment:
-      DB_HOST: db
-      POSTGRES_USER: nest
-      POSTGRES_PASSWORD: nest
-      POSTGRES_DB: nestbook
-      POSTGRES_PORT: 5432
-    volumes:
-      - .:/code
-    depends_on:
-      - db
-      - api
-    links:
-      - db
