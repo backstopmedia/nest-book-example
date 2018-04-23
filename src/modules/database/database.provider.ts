@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { databaseConfig } from '../../shared/index';
 import { User } from '../user/user.entity';
-import { Entry } from '../entries/entry.entity';
+import { Entry } from '../entry/entry.entity';
 
 export const databaseProvider = {
     provide: 'SequelizeInstance',

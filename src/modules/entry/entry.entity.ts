@@ -58,7 +58,7 @@ export class Entry extends Model<Entry> {
     public user: User;
 
     @BeforeValidate
-    public static validateData(user: Entry, options: any) {
+    public static validateData(entry: Entry, options: any) {
         if (!options.transaction) throw new Error('Missing transaction.');
     }
 }

@@ -1,4 +1,4 @@
-import { Entry } from '../../entries/entry.entity';
+import { Entry } from '../../entry/entry.entity';
 
 export interface IUser {
     id?: number;

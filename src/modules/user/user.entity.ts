@@ -14,7 +14,7 @@ import {
     HasMany
 } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
-import { Entry } from '../entries/entry.entity';
+import { Entry } from '../entry/entry.entity';
 
 const tableOptions: IDefineOptions = { timestamp: true, tableName: 'users' } as IDefineOptions;
 
