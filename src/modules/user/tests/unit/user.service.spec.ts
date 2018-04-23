@@ -12,7 +12,7 @@ describe('UserService', () => {
     let userService: UserService;
     let fakeUsers: Array<any>;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const module = await Test.createTestingModule({
             components: [
                 userProvider,
@@ -22,9 +22,13 @@ describe('UserService', () => {
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
-        await sequelizeInstance.sync();
 
         userService = module.get<UserService>(UserService);
+    });
+
+    beforeEach(async () => {
+        await sequelizeInstance.sync();
+
         fakeUsers = utilities.generateFakeUsers()
             .map(user => {
                 user.password = crypto.createHmac('sha256', user.password).digest('hex');

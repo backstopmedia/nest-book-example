@@ -11,7 +11,7 @@ describe('EntryService', () => {
     let entryService: EntryService;
     let fakeEntries: Array<IEntry>;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const module = await Test.createTestingModule({
             components: [
                 entryProvider,
@@ -21,6 +21,11 @@ describe('EntryService', () => {
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
+
+        entryService = module.get<EntryService>(EntryService);
+    });
+
+    beforeEach(async () => {
         await sequelizeInstance.sync();
 
         const [, userId] = await sequelizeInstance.query(`
@@ -35,8 +40,6 @@ describe('EntryService', () => {
                 '${moment().format('YYYY-MM-DD')}'
             );
         `, { type: sequelizeInstance.QueryTypes.INSERT } );
-
-        entryService = module.get<EntryService>(EntryService);
         fakeEntries = utilities.generateFakeEntries(userId);
     });
 

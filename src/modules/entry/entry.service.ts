@@ -19,9 +19,9 @@ export class EntryService implements IEntryService {
         return await this.EntryRepository.findById<Entry>(id);
     }
 
-    public async create(user: IEntry): Promise<Entry> {
+    public async create(entry: IEntry): Promise<Entry> {
         return await this.sequelizeInstance.transaction(async transaction => {
-            return await this.EntryRepository.create<Entry>(user, {
+            return await this.EntryRepository.create<Entry>(entry, {
                 returning: true,
                 transaction,
             });
@@ -30,11 +30,11 @@ export class EntryService implements IEntryService {
 
     public async update(id: number, newValue: IEntry): Promise<Entry | null> {
         return await this.sequelizeInstance.transaction(async transaction => {
-            let user = await this.EntryRepository.findById<Entry>(id, { transaction });
-            if (!user) throw new Error('The user was not found.');
+            let entry = await this.EntryRepository.findById<Entry>(id, { transaction });
+            if (!entry) throw new Error('The entry was not found.');
 
-            user = this._assign(user, newValue);
-            return await user.save({
+            entry = this._assign(entry, newValue);
+            return await entry.save({
                 returning: true,
                 transaction,
             });
@@ -51,19 +51,19 @@ export class EntryService implements IEntryService {
     }
 
     /**
-     * @description: Assign new value in the user found in the database.
+     * @description: Assign new value in the entry found in the database.
      *
-     * @param {IEntry} user
+     * @param {IEntry} entry
      * @param {IEntry} newValue
      * @return {Entry}
      * @private
      */
-    private _assign(user: Entry, newValue: IEntry): Entry {
-        for (const key of Object.keys(user.dataValues)) {
+    private _assign(entry: Entry, newValue: IEntry): Entry {
+        for (const key of Object.keys(entry.dataValues)) {
             if (!newValue[key]) continue;
-            if (user[key] !== newValue[key]) user[key] = newValue[key];
+            if (entry[key] !== newValue[key]) entry[key] = newValue[key];
         }
 
-        return user as Entry;
+        return entry as Entry;
     }
 }

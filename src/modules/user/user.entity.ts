@@ -11,13 +11,17 @@ import {
     BeforeCreate,
     PrimaryKey,
     AutoIncrement,
-    HasMany
+    HasMany, DefaultScope
 } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
 import { Entry } from '../entry/entry.entity';
+import { Comment } from '../comment/comment.entity';
 
 const tableOptions: IDefineOptions = { timestamp: true, tableName: 'users' } as IDefineOptions;
 
+@DefaultScope({
+    include: [() => Entry]
+})
 @Table(tableOptions)
 export class User extends Model<User> {
     @PrimaryKey
@@ -74,6 +78,9 @@ export class User extends Model<User> {
 
     @HasMany(() => Entry)
     public entries: Entry[];
+
+    @HasMany(() => Comment)
+    public comments: Comment[];
 
     @BeforeValidate
     public static validateData(user: User, options: any) {

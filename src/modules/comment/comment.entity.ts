@@ -11,20 +11,16 @@ import {
     ForeignKey,
     AutoIncrement,
     BelongsTo,
-    DefaultScope,
-    HasMany
+    DefaultScope
 } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
 import { User } from '../user/user.entity';
-import { Comment } from '../comment/comment.entity';
+import { Entry } from '../entry/entry.entity';
 
-const tableOptions: IDefineOptions = { timestamp: true, tableName: 'entries' } as IDefineOptions;
+const tableOptions: IDefineOptions = { timestamp: true, tableName: 'comments' } as IDefineOptions;
 
-@DefaultScope({
-    include: [() => Comment]
-})
 @Table(tableOptions)
-export class Entry extends Model<Entry> {
+export class Comment extends Model<Comment> {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
@@ -34,13 +30,7 @@ export class Entry extends Model<Entry> {
         type: DataType.STRING,
         allowNull: false,
     })
-    public title: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    public content: string;
+    public body: string;
 
     @ForeignKey(() => User)
     @Column({
@@ -48,6 +38,13 @@ export class Entry extends Model<Entry> {
         allowNull: false,
     })
     public userId: number;
+
+    @ForeignKey(() => Entry)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    public entryId: number;
 
     @CreatedAt
     public createdAt: Date;
@@ -58,11 +55,11 @@ export class Entry extends Model<Entry> {
     @DeletedAt
     public deletedAt: Date;
 
-    @HasMany(() => Comment)
-    public comments: Comment[];
-
     @BelongsTo(() => User)
     public user: User;
+
+    @BelongsTo(() => Entry)
+    public entry: Entry;
 
     @BeforeValidate
     public static validateData(entry: Entry, options: any) {
