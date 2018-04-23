@@ -1,6 +1,6 @@
 import {Middleware, NestMiddleware, ExpressMiddleware, HttpStatus} from '@nestjs/common';
 import * as passport from 'passport';
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../modules/user/user.service';
 
 @Middleware()
 export class AuthenticationMiddleware implements NestMiddleware {

@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import { databaseConfig } from '../../shared/index';
+import { databaseConfig } from '../../shared/config/dataBase.config';
 import { User } from '../user/user.entity';
 import { Entry } from '../entry/entry.entity';
 

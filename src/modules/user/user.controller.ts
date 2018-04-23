@@ -13,33 +13,33 @@ export class UserController {
 
     @Post('users')
     public async create(@Body() body: any, @Res() res) {
-        if (!body || (body && Object.keys(body).length === 0)) throw new Error('Missing some information.');
+        if (!body || (body && Object.keys(body).length === 0)) return res.status(HttpStatus.BAD_REQUEST).send('Missing some information.');
 
         await this.userService.create(body);
         return res.status(HttpStatus.CREATED).send();
     }
 
-    @Get('users/:id')
-    public async show(@Param() id: number, @Res() res) {
-        if (!id) throw new Error('Missing id.');
+    @Get('users/:userId')
+    public async show(@Param('userId') userId: number, @Res() res) {
+        if (!userId) return res.status(HttpStatus.BAD_REQUEST).send('Missing userId.');
 
-        const user = await this.userService.findById(id);
+        const user = await this.userService.findById(userId);
         return res.status(HttpStatus.OK).json(user);
     }
 
-    @Put('users/:id')
-    public async update(@Param() id: number, @Body() body: any, @Res() res) {
-        if (!id) throw new Error('Missing id.');
+    @Put('users/:userId')
+    public async update(@Param('userId') userId: number, @Body() body: any, @Res() res) {
+        if (!userId) return res.status(HttpStatus.BAD_REQUEST).send('Missing userId.');
 
-        await this.userService.update(id, body);
+        await this.userService.update(userId, body);
         return res.status(HttpStatus.OK).send();
     }
 
-    @Delete('users/:id')
-    public async delete(@Param() id: number, @Res() res) {
-        if (!id) throw new Error('Missing id.');
+    @Delete('users/:userId')
+    public async delete(@Param('userId') userId: number, @Res() res) {
+        if (!userId) return res.status(HttpStatus.BAD_REQUEST).send('Missing userId.');
 
-        await this.userService.delete(id);
+        await this.userService.delete(userId);
         return res.status(HttpStatus.OK).send();
     }
 }
