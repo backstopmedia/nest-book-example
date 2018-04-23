@@ -11,8 +11,10 @@ import {
     BeforeCreate,
     PrimaryKey,
     AutoIncrement,
+    HasMany
 } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
+import { Entry } from '../entries/entry.entity';
 
 const tableOptions: IDefineOptions = { timestamp: true, tableName: 'users' } as IDefineOptions;
 
@@ -69,6 +71,9 @@ export class User extends Model<User> {
 
     @DeletedAt
     public deletedAt: Date;
+
+    @HasMany(() => Entry)
+    public entries: Entry[];
 
     @BeforeValidate
     public static validateData(user: User, options: any) {

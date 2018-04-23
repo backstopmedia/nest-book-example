@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { databaseConfig } from '../../shared/index';
 import { User } from '../user/user.entity';
+import { Entry } from '../entries/entry.entity';
 
 export const databaseProvider = {
     provide: 'SequelizeInstance',
@@ -16,7 +17,7 @@ export const databaseProvider = {
         }
 
         const sequelize = new Sequelize(config);
-        sequelize.addModels([User]);
+        sequelize.addModels([User, Entry]);
         /* await sequelize.sync(); */
         return sequelize;
     },
