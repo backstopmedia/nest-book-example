@@ -25,9 +25,9 @@ export class AppModule implements NestModule {
             .with(strategy)
             .forRoutes(
                 { path: '/users', method: RequestMethod.GET },
-                { path: '/users/:id', method: RequestMethod.GET },
-                { path: '/users/:id', method: RequestMethod.PUT },
-                { path: '/users/:id', method: RequestMethod.DELETE }
+                { path: '/users/:userId', method: RequestMethod.GET },
+                { path: '/users/:userId', method: RequestMethod.PUT },
+                { path: '/users/:userId', method: RequestMethod.DELETE }
             , EntryController);
     }
 }
