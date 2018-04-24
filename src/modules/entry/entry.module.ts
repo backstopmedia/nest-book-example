@@ -15,8 +15,8 @@ export class EntryModule implements NestModule {
         consumer
             .apply(FetchEntryMiddleware)
             .forRoutes(
-                { path: 'users/:userId/entries/:entryId', method: RequestMethod.GET },
-                { path: 'users/:userId/entries/:entryId', method: RequestMethod.PUT },
-                { path: 'users/:userId/entries/:entryId', method: RequestMethod.DELETE });
+                { path: 'entries/:entryId', method: RequestMethod.GET },
+                { path: 'entries/:entryId', method: RequestMethod.PUT },
+                { path: 'entries/:entryId', method: RequestMethod.DELETE });
     }
 }

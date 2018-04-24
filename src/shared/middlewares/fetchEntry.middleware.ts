@@ -12,8 +12,6 @@ export class FetchEntryMiddleware implements NestMiddleware {
             const entry = await this.entryService.findById(req.params.entryId);
             if (!entry) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
 
-            if (req.user.id != entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
-
             req.entry = entry;
             next();
         };

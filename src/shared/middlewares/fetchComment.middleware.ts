@@ -12,8 +12,6 @@ export class FetchCommentMiddleware implements NestMiddleware {
             const comment = await this.commentService.findById(req.params.commentId);
             if (!comment) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the comment.');
 
-            if (req.user.id != comment.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the comment.');
-
             req.comment = comment;
             next();
         };

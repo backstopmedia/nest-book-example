@@ -19,8 +19,8 @@ export class CommentModule implements NestModule {
             .forRoutes(CommentController)
             .apply(FetchCommentMiddleware)
             .forRoutes(
-                { path: 'users/:userId/entries/:entryId/comments/:commentId', method: RequestMethod.GET },
-                { path: 'users/:userId/entries/:entryId/comments/:commentId', method: RequestMethod.PUT },
-                { path: 'users/:userId/entries/:entryId/comments/:commentId', method: RequestMethod.DELETE })
+                { path: 'entries/:entryId/comments/:commentId', method: RequestMethod.GET },
+                { path: 'entries/:entryId/comments/:commentId', method: RequestMethod.PUT },
+                { path: 'entries/:entryId/comments/:commentId', method: RequestMethod.DELETE })
     }
 }

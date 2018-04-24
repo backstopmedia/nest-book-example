@@ -6,14 +6,13 @@ import { IEntry } from './interfaces';
 import { IUser } from '../user/interfaces';
 import { User } from '../../shared/decorators/user.decorator';
 
-@Controller('users/:userId')
-@UseGuards(checkLoggedInUserGuard)
+@Controller()
 export class EntryController {
     constructor(private readonly entryService: EntryService) { }
 
     @Get('entries')
     public async index(@User() user: IUser, @Res() res) {
-        const entries = await this.entryService.findAll({ where: { userId: user.id }});
+        const entries = await this.entryService.findAll();
         return res.status(HttpStatus.OK).json(entries);
     }
 
@@ -28,18 +27,20 @@ export class EntryController {
     }
 
     @Get('entries/:entryId')
-    public async show(@User() user: IUser, @Entry() entry: IEntry, @Param('entryId') entryId: number, @Res() res) {
+    public async show(@User() user: IUser, @Entry() entry: IEntry, @Res() res) {
         return res.status(HttpStatus.OK).json(entry);
     }
 
     @Put('entries/:entryId')
     public async update(@User() user: IUser, @Entry() entry: IEntry, @Param('entryId') entryId: number, @Body() body: any, @Res() res) {
+        if (user.id != entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
         await this.entryService.update(entryId, body);
         return res.status(HttpStatus.OK).send();
     }
 
     @Delete('entries/:entryId')
     public async delete(@User() user: IUser, @Entry() entry: IEntry, @Param('entryId') entryId: number, @Res() res) {
+        if (user.id != entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
         await this.entryService.delete(entryId);
         return res.status(HttpStatus.OK).send();
     }

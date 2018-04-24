@@ -6,14 +6,13 @@ import { IComment } from './interfaces';
 import { IUser } from '../user/interfaces';
 import { User } from '../../shared/decorators/user.decorator';
 
-@Controller('users/:userId/entries/:entryId')
-@UseGuards(checkLoggedInUserGuard)
+@Controller('entries/:entryId')
 export class CommentController {
     constructor(private readonly commentService: CommentService) { }
 
     @Get('comments')
     public async index(@User() user: IUser, @Param('entryId') entryId: number, @Res() res) {
-        const comments = await this.commentService.findAll({ where: { userId: user.id, entryId }});
+        const comments = await this.commentService.findAll({ where: { entryId }});
         return res.status(HttpStatus.OK).json(comments);
     }
 
@@ -34,12 +33,14 @@ export class CommentController {
 
     @Put('comments/:commentId')
     public async update(@User() user: IUser, @Comment() comment: IComment, @Body() body: any, @Res() res) {
+        if (user.id != comment.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the comment.');
         await this.commentService.update(comment.id, body);
         return res.status(HttpStatus.OK).send();
     }
 
     @Delete('comments/:commentId')
     public async delete(@User() user: IUser, @Comment() comment: IComment, @Res() res) {
+        if (user.id != comment.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the comment.');
         await this.commentService.delete(comment.id);
         return res.status(HttpStatus.OK).send();
     }
