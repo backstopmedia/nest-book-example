@@ -1,4 +1,4 @@
-import { checkLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
+import { CheckLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
 import { Comment } from '../../shared/decorators/comment.decorator';
 import { CommentService } from './comment.service';
 import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param, UseGuards } from '@nestjs/common';

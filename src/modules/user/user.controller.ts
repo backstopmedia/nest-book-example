@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { checkLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
+import { CheckLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
 
 @Controller()
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @Get('users')
-    @UseGuards(checkLoggedInUserGuard)
+    @UseGuards(CheckLoggedInUserGuard)
     public async index(@Res() res) {
         const users = await this.userService.findAll();
         return res.status(HttpStatus.OK).json(users);
@@ -22,7 +22,7 @@ export class UserController {
     }
 
     @Get('users/:userId')
-    @UseGuards(checkLoggedInUserGuard)
+    @UseGuards(CheckLoggedInUserGuard)
     public async show(@Param('userId') userId: number, @Res() res) {
         if (!userId) return res.status(HttpStatus.BAD_REQUEST).send('Missing userId.');
 
@@ -31,7 +31,7 @@ export class UserController {
     }
 
     @Put('users/:userId')
-    @UseGuards(checkLoggedInUserGuard)
+    @UseGuards(CheckLoggedInUserGuard)
     public async update(@Param('userId') userId: number, @Body() body: any, @Res() res) {
         if (!userId) return res.status(HttpStatus.BAD_REQUEST).send('Missing userId.');
 
@@ -40,7 +40,7 @@ export class UserController {
     }
 
     @Delete('users/:userId')
-    @UseGuards(checkLoggedInUserGuard)
+    @UseGuards(CheckLoggedInUserGuard)
     public async delete(@Param('userId') userId: number, @Res() res) {
         if (!userId) return res.status(HttpStatus.BAD_REQUEST).send('Missing userId.');
 

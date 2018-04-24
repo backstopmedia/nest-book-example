@@ -1,4 +1,4 @@
-import { checkLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
+import { CheckLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
 import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param, UseGuards } from '@nestjs/common';
 import { Entry } from '../../shared/decorators/entry.decorator';
 import { EntryService } from './entry.service';
