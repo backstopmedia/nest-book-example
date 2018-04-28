@@ -10,7 +10,8 @@ import { Module, NestModule, RequestMethod } from '@nestjs/common';
 @Module({
     imports: [EntryModule],
     controllers: [CommentController],
-    components: [commentProvider, CommentService]
+    components: [commentProvider, CommentService],
+    exports: [CommentService]
 })
 export class CommentModule implements NestModule {
     public configure(consumer: MiddlewaresConsumer) {

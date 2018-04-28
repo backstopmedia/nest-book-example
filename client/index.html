@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <script src="socket.io.js"></script>
+    <script>
+        const socket = io('http://localhost:3000',  {
+            query: 'auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QuZnIiLCJpYXQiOjE1MjQ4MzY4NjksImV4cCI6MTUyNDg0MDQ2OX0.0RsZw2EE_s4pZ-3r51DfzHnN862oA98657Vn5PZSWJE'
+        });
+
+        socket.on('connect', function () {
+            socket.emit('showUser', { userId: 4 });
+            socket.emit('indexComment', { entryId: 2 });
+            socket.emit('showComment', { entryId: 2, commentId: 1 });
+        });
+        socket.on('indexComment', function (data) {
+            console.log('indexComment', data);
+        });
+        socket.on('showComment', function (data) {
+            console.log('showComment', data);
+        });
+        socket.on('showUser', function (data) {
+            console.log('showUser', data);
+        });
+        socket.on('exception', function (data) {
+            console.log('exception', data);
+        });
+    </script>
+</head>
+
+<body></body>
+
+</html>
