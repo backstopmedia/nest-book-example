@@ -33,14 +33,14 @@ export class EntryController {
 
     @Put('entries/:entryId')
     public async update(@User() user: IUser, @Entry() entry: IEntry, @Param('entryId') entryId: number, @Body() body: any, @Res() res) {
-        if (user.id != entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
+        if (user.id !== entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
         await this.entryService.update(entryId, body);
         return res.status(HttpStatus.OK).send();
     }
 
     @Delete('entries/:entryId')
     public async delete(@User() user: IUser, @Entry() entry: IEntry, @Param('entryId') entryId: number, @Res() res) {
-        if (user.id != entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
+        if (user.id !== entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
         await this.entryService.delete(entryId);
         return res.status(HttpStatus.OK).send();
     }
