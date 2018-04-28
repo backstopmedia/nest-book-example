@@ -1,7 +1,7 @@
 import { Entry } from '../../entry/entry.entity';
 
 export interface IUser {
-    id: number;
+    id?: number;
     firstName: string;
     lastName: string;
     email: string;
