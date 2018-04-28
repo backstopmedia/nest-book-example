@@ -5,5 +5,5 @@ export interface IEntry {
     title: string;
     content: string;
     userId: number;
-    comments?: Array<Comment>
+    comments?: Array<Comment>;
 }
