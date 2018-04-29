@@ -1,0 +1,20 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 10
+      arrivalRate: 200
+scenarios:
+  - name: 'Users Show Flow Test'
+    flow:
+      - post:
+          url: '/login'
+          json:
+            email: 'jane.doe@gmail.com'
+            password: 'P@ssw0rd'
+          capture:
+            - json: '$.access_token'
+              as: 'access_token'
+      - get:
+          url: '/users/1'
+          headers:
+            Authorization: 'Bearer {{access_token}}'

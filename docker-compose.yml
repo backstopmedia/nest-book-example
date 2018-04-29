@@ -3,6 +3,7 @@ version: '3'
 volumes:
   # for persistence between restarts
   postgres_data: {}
+  rabbitmq_data: {}
 
 services:
   db:
@@ -16,6 +17,18 @@ services:
       POSTGRES_DB: nestbook
     volumes:
         - postgres_data:/var/lib/postgresql/data
+  # redis:
+  #     image: redis
+  #     restart: always
+  #     ports:
+  #       - "30001:6379"
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "25672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/bitnami
   api:
     build:
       context: .
@@ -24,8 +37,12 @@ services:
         - NODE_ENV=development
     depends_on:
       - db
+      # - redis
+      - rabbitmq
     links:
       - db
+      # - redis
+      - rabbitmq
     environment:
       DB_HOST: db
       POSTGRES_USER: nest
@@ -33,6 +50,8 @@ services:
       POSTGRES_DB: nestbook
       POSTGRES_PORT: 5432
       PORT: 3000
+      # REDIS_URL: redis://redis:6379
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
     ports:
       - "3000:3000"
     volumes:
