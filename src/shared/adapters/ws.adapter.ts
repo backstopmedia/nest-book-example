@@ -7,7 +7,7 @@ import { INestApplication, WebSocketAdapter } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 import { UserModule } from '../../modules/user/user.module';
 import { UserService } from '../../modules/user/user.service';
-import { WsAuthenticationGatewayMiddleware } from '../middlewares/ws.authentication.gateway.middleware';
+import { WsAuthenticationGatewayMiddleware } from '../middlewares/ws-authentication.gateway.middleware';
 import { MessageMappingProperties } from '@nestjs/websockets';
 
 export class WsAdapter implements WebSocketAdapter {

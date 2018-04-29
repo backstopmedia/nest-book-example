@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CheckLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
+import { CheckLoggedInUserGuard } from '../../shared/guards/check-loggedIn-user.guard';
 
 @Controller()
 export class UserController {

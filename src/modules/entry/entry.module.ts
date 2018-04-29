@@ -1,7 +1,7 @@
 import { EntryController } from './entry.controller';
 import { entryProvider } from './entry.provider';
 import { EntryService } from './entry.service';
-import { FetchEntryMiddleware } from '../../shared/middlewares/fetchEntry.middleware';
+import { FetchEntryMiddleware } from '../../shared/middlewares/fetch-entry.middleware';
 import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { Module, NestModule, RequestMethod } from '@nestjs/common';
 

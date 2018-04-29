@@ -8,7 +8,7 @@ import { EntryController } from './modules/entry/entry.controller';
 import { EntryModule } from './modules/entry/entry.module';
 import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { Module, NestModule, RequestMethod } from '@nestjs/common';
-import { strategy } from './shared/config/passportStrategy.config';
+import { strategy } from './shared/config/passport-strategy.config';
 import { UserGatewayModule } from './gateways/user/user.gateway.module';
 import { UserModule } from './modules/user/user.module';
 
