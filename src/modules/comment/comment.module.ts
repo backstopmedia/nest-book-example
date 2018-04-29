@@ -2,8 +2,8 @@ import { CommentController } from './comment.controller';
 import { commentProvider } from './comment.provider';
 import { CommentService } from './comment.service';
 import { EntryModule } from '../entry/entry.module';
-import { FetchCommentMiddleware } from '../../shared/middlewares/fetchComment.middleware';
-import { FetchEntryMiddleware } from '../../shared/middlewares/fetchEntry.middleware';
+import { FetchCommentMiddleware } from '../../shared/middlewares/fetch-comment.middleware';
+import { FetchEntryMiddleware } from '../../shared/middlewares/fetch-entry.middleware';
 import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { Module, NestModule, RequestMethod } from '@nestjs/common';
 

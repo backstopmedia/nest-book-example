@@ -25,6 +25,7 @@
     "@types/passport-jwt": "^3.0.1",
     "@types/sequelize": "^4.27.13",
     "@types/umzug": "^2.1.1",
+    "@types/ws": "^4.0.2",
     "amqplib": "^0.5.2",
     "crypto": "^1.0.1",
     "jsonwebtoken": "^8.2.1",
@@ -37,7 +38,8 @@
     "sequelize": "^4.37.5",
     "sequelize-typescript": "^0.6.3",
     "typescript": "^2.6.2",
-    "umzug": "^2.1.0"
+    "umzug": "^2.1.0",
+    "ws": "^5.1.1"
   },
   "devDependencies": {
     "@types/amqplib": "^0.5.7",

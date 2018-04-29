@@ -3,8 +3,19 @@
 <head>
     <script src="socket.io.js"></script>
     <script>
+        /* If you want to use a custom adapter such as WebSocket. */
+        /*const ws = new WebSocket("ws://localhost:3000?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QuZnIiLCJpYXQiOjE1MjUwMDc2NjksImV4cCI6MTUyNTAxMTI2OX0.GQjWzdKXAFTAtOkpLjId7tPliIpKy5Ru50evMzf15YE");
+        ws.onopen = function() {
+            console.log('open');
+            ws.send(JSON.stringify({ type: 'showComment', entryId: 2, commentId: 1 }));
+        };
+        ws.onmessage = function(ev) {
+            const _data = JSON.parse(ev.data);
+            console.log(_data);
+        };*/
+
         const socket = io('http://localhost:3000',  {
-            query: 'auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QuZnIiLCJpYXQiOjE1MjQ4MzY4NjksImV4cCI6MTUyNDg0MDQ2OX0.0RsZw2EE_s4pZ-3r51DfzHnN862oA98657Vn5PZSWJE'
+            query: 'auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QuZnIiLCJpYXQiOjE1MjQ5NDk3NTgsImV4cCI6MTUyNDk1MzM1OH0.QH_jhOWKockuV-w-vIKMgT_eLJb3dp6aByDbMvEY5xc'
         });
 
         socket.on('connect', function () {

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body,
     Param, UseGuards, UseFilters, UsePipes, Req, UseInterceptors, Inject } from '@nestjs/common';
 import { MessagePattern, Client, Transport, ClientProxy } from '@nestjs/microservices';
 import { UserService } from './user.service';
-import { CheckLoggedInUserGuard } from '../../shared/guards/checkLoggedInUser.guard';
+import { CheckLoggedInUserGuard } from '../../shared/guards/check-loggedIn-user.guard';
 import { RpcValidationException } from '../../shared/exceptions/rpcValidation.exception';
 import { RpcValidationFilter } from '../../shared/filters/rpcValidation.filter';
 import { RpcValidationPipe } from '../../shared/pipes/rpcValidation.pipe';
