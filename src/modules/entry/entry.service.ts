@@ -1,11 +1,13 @@
 import { Component, Inject } from '@nestjs/common';
 import { IEntry, IEntryService } from './interfaces/index';
 import { Entry } from './entry.entity';
+import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
 @Component()
 export class EntryService implements IEntryService {
     constructor(@Inject('EntryRepository') private readonly EntryRepository: typeof Entry,
-                @Inject('SequelizeInstance') private readonly sequelizeInstance) { }
+                @Inject('SequelizeInstance') private readonly sequelizeInstance,
+                private readonly databaseUtilitiesService: DatabaseUtilitiesService) { }
 
     public async findAll(options?: object): Promise<Array<Entry>> {
         return await this.EntryRepository.findAll<Entry>(options);
@@ -33,7 +35,7 @@ export class EntryService implements IEntryService {
             let entry = await this.EntryRepository.findById<Entry>(id, { transaction });
             if (!entry) throw new Error('The entry was not found.');
 
-            entry = this._assign(entry, newValue);
+            entry = this.databaseUtilitiesService.assign(entry, newValue);
             return await entry.save({
                 returning: true,
                 transaction,
@@ -48,22 +50,5 @@ export class EntryService implements IEntryService {
                 transaction,
             });
         });
-    }
-
-    /**
-     * @description: Assign new value in the entry found in the database.
-     *
-     * @param {IEntry} entry
-     * @param {IEntry} newValue
-     * @return {Entry}
-     * @private
-     */
-    private _assign(entry: Entry, newValue: IEntry): Entry {
-        for (const key of Object.keys(entry.dataValues)) {
-            if (!newValue[key]) continue;
-            if (entry[key] !== newValue[key]) entry[key] = newValue[key];
-        }
-
-        return entry as Entry;
     }
 }
