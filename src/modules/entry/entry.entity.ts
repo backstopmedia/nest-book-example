@@ -49,6 +49,13 @@ export class Entry extends Model<Entry> {
     })
     public userId: number;
 
+    @Column({
+        type: DataType.TEXT,
+        allowNull: true,
+        
+    })
+    public keywords: string;
+
     @CreatedAt
     public createdAt: Date;
 

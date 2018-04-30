@@ -1,13 +1,11 @@
 import { Component, Inject } from '@nestjs/common';
 import { IEntry, IEntryService } from './interfaces/index';
 import { Entry } from './entry.entity';
-import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
 @Component()
 export class EntryService implements IEntryService {
     constructor(@Inject('EntryRepository') private readonly EntryRepository: typeof Entry,
-                @Inject('SequelizeInstance') private readonly sequelizeInstance,
-                private readonly databaseUtilitiesService: DatabaseUtilitiesService) { }
+                @Inject('SequelizeInstance') private readonly sequelizeInstance) { }
 
     public async findAll(options?: object): Promise<Array<Entry>> {
         return await this.EntryRepository.findAll<Entry>(options);
@@ -19,36 +17,5 @@ export class EntryService implements IEntryService {
 
     public async findById(id: number): Promise<Entry | null> {
         return await this.EntryRepository.findById<Entry>(id);
-    }
-
-    public async create(entry: IEntry): Promise<Entry> {
-        return await this.sequelizeInstance.transaction(async transaction => {
-            return await this.EntryRepository.create<Entry>(entry, {
-                returning: true,
-                transaction,
-            });
-        });
-    }
-
-    public async update(id: number, newValue: IEntry): Promise<Entry | null> {
-        return await this.sequelizeInstance.transaction(async transaction => {
-            let entry = await this.EntryRepository.findById<Entry>(id, { transaction });
-            if (!entry) throw new Error('The entry was not found.');
-
-            entry = this.databaseUtilitiesService.assign(entry, newValue);
-            return await entry.save({
-                returning: true,
-                transaction,
-            });
-        });
-    }
-
-    public async delete(id: number): Promise<void> {
-        return await this.sequelizeInstance.transaction(async transaction => {
-            return await this.EntryRepository.destroy({
-                where: { id },
-                transaction,
-            });
-        });
     }
 }
