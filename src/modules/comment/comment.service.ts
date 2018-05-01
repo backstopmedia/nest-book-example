@@ -1,11 +1,13 @@
 import { Component, Inject } from '@nestjs/common';
 import { IComment, ICommentService } from './interfaces/index';
 import { Comment } from './comment.entity';
+import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
 @Component()
 export class CommentService implements ICommentService {
     constructor(@Inject('CommentRepository') private readonly CommentRepository: typeof Comment,
-                @Inject('SequelizeInstance') private readonly sequelizeInstance) { }
+                @Inject('SequelizeInstance') private readonly sequelizeInstance,
+                private readonly databaseUtilitiesService: DatabaseUtilitiesService) { }
 
     public async findAll(options?: object): Promise<Array<Comment>> {
         return await this.CommentRepository.findAll<Comment>(options);
@@ -33,7 +35,7 @@ export class CommentService implements ICommentService {
             let comment = await this.CommentRepository.findById<Comment>(id, { transaction });
             if (!comment) throw new Error('The comment was not found.');
 
-            comment = this._assign(comment, newValue);
+            comment = this.databaseUtilitiesService.assign(comment, newValue);
             return await comment.save({
                 returning: true,
                 transaction,
@@ -48,22 +50,5 @@ export class CommentService implements ICommentService {
                 transaction,
             });
         });
-    }
-
-    /**
-     * @description: Assign new value in the comment found in the database.
-     *
-     * @param {IComment} comment
-     * @param {IComment} newValue
-     * @return {Comment}
-     * @private
-     */
-    private _assign(comment: Comment, newValue: IComment): Comment {
-        for (const key of Object.keys(comment.dataValues)) {
-            if (!newValue[key]) continue;
-            if (comment[key] !== newValue[key]) comment[key] = newValue[key];
-        }
-
-        return comment as Comment;
     }
 }

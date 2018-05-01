@@ -1,11 +1,13 @@
 import { Component, Inject } from '@nestjs/common';
 import { IUser, IUserService } from './interfaces/index';
 import { User } from './user.entity';
+import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
 @Component()
 export class UserService implements IUserService {
     constructor(@Inject('UserRepository') private readonly UserRepository: typeof User,
-                @Inject('SequelizeInstance') private readonly sequelizeInstance) { }
+                @Inject('SequelizeInstance') private readonly sequelizeInstance,
+                private readonly databaseUtilitiesService: DatabaseUtilitiesService) { }
 
     public async findAll(options?: object): Promise<Array<User>> {
         return await this.UserRepository.findAll<User>(options);
@@ -33,7 +35,7 @@ export class UserService implements IUserService {
             let user = await this.UserRepository.findById<User>(id, { transaction });
             if (!user) throw new Error('The user was not found.');
 
-            user = this._assign(user, newValue);
+            user = this.databaseUtilitiesService.assign(user, newValue);
             return await user.save({
                 returning: true,
                 transaction,
@@ -48,22 +50,5 @@ export class UserService implements IUserService {
                 transaction,
             });
         });
-    }
-
-    /**
-     * @description: Assign new value in the user found in the database.
-     *
-     * @param {IUser} user
-     * @param {IUser} newValue
-     * @return {User}
-     * @private
-     */
-    private _assign(user: User, newValue: IUser): User {
-        for (const key of Object.keys(user.dataValues)) {
-            if (!newValue[key]) continue;
-            if (user[key] !== newValue[key]) user[key] = newValue[key];
-        }
-
-        return user as User;
     }
 }
