@@ -1,23 +1,15 @@
 version: '3'
 
 volumes:
-  # for persistence between restarts
-  mariadb_data:
+  mongo_data:
 
 services:
-  mariadb:
-    image: mariadb:latest
-    restart: always
+  mongo:
+    image: mongo:latest
     ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: nestbook
-      MYSQL_USER: nest
-      MYSQL_PASSWORD: nest
+    - "27017:27017"
     volumes:
-        - mariadb_data:/var/lib/mysql
-
+    - mongo_data:/data/db
   api:
     build:
       context: .
@@ -25,9 +17,9 @@ services:
       args:
         - NODE_ENV=development
     depends_on:
-      - mariadb
+      - mongo
     links:
-      - mariadb
+      - mongo
     environment:
       PORT: 3000
     ports:

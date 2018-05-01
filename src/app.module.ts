@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { EntriesModule } from './modules/entry/entry.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), EntriesModule]
+  imports: [MongooseModule.forRoot('mongodb://mongo:27017/nest'), EntriesModule]
 })
 export class AppModule {}

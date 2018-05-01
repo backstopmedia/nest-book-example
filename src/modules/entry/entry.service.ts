@@ -1,24 +1,30 @@
 import { Component } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
 
-import { Entry } from './entry.entity';
+import { EntrySchema } from './entry.schema';
+import { Entry } from './entry.interface';
 
 @Component()
 export class EntriesService {
   constructor(
-    @InjectRepository(Entry) private readonly entry: Repository<Entry>
+    @InjectModel(EntrySchema) private readonly entryModel: Model<Entry>
   ) {}
 
+  // this method retrieves all entries
   findAll() {
-    return this.entry.find();
+    return this.entryModel.find().exec();
   }
 
-  findOneById(id: number) {
-    return this.entry.findOne(id, { relations: ['comments'] });
+  // this method retrieves only one entry, by entry ID
+  findById(id: string) {
+    return this.entryModel.findById(id).exec();
   }
 
-  create(newEntry: Entry) {
-    this.entry.save(newEntry);
+  // this method saves an entry in the database
+  create(entry) {
+    entry._id = new Types.ObjectId();
+    const createdEntry = new this.entryModel(entry);
+    return createdEntry.save();
   }
 }
