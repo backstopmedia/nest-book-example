@@ -2,20 +2,22 @@ version: '3'
 
 volumes:
   # for persistence between restarts
-  postgres_data: {}
+  mariadb_data:
 
 services:
-  db:
-    image: postgres
+  mariadb:
+    image: mariadb:latest
     restart: always
     ports:
-      - "30000:5432"
+      - "3306:3306"
     environment:
-      POSTGRES_USER: nest
-      POSTGRES_PASSWORD: nest
-      POSTGRES_DB: nestbook
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: nestbook
+      MYSQL_USER: nest
+      MYSQL_PASSWORD: nest
     volumes:
-        - postgres_data:/var/lib/postgresql/data
+        - mariadb_data:/var/lib/mysql
+
   api:
     build:
       context: .
@@ -23,15 +25,10 @@ services:
       args:
         - NODE_ENV=development
     depends_on:
-      - db
+      - mariadb
     links:
-      - db
+      - mariadb
     environment:
-      DB_HOST: db
-      POSTGRES_USER: nest
-      POSTGRES_PASSWORD: nest
-      POSTGRES_DB: nestbook
-      POSTGRES_PORT: 5432
       PORT: 3000
     ports:
       - "3000:3000"

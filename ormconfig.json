@@ -1,0 +1,10 @@
+{
+  "type": "mariadb",
+  "host": "mariadb",
+  "port": 3306,
+  "username": "nest",
+  "password": "nest",
+  "database": "nestbook",
+  "synchronize": true,
+  "entities": ["src/**/*.entity.ts"]
+}

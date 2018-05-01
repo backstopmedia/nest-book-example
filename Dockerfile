@@ -2,7 +2,7 @@ FROM node:carbon-alpine
 
 WORKDIR /app
 COPY package.json /app
-RUN yarn install
+RUN npm install
 COPY . /app
 
 EXPOSE 3000

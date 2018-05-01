@@ -19,10 +19,10 @@
     "@nestjs/core": "^4.5.10",
     "@nestjs/microservices": "^4.5.8",
     "@nestjs/testing": "^4.5.5",
+    "@nestjs/typeorm": "^2.0.0",
     "@nestjs/websockets": "^4.5.8",
     "@types/jsonwebtoken": "^7.2.6",
     "@types/passport-jwt": "^3.0.1",
-    "@types/sequelize": "^4.27.13",
     "@types/socket.io": "1.4.33",
     "@types/umzug": "^2.1.1",
     "@types/ws": "^4.0.2",
@@ -34,8 +34,7 @@
     "pg": "^7.4.1",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.6",
-    "sequelize": "^4.37.5",
-    "sequelize-typescript": "^0.6.3",
+    "typeorm": "^0.2.4",
     "typescript": "^2.6.2",
     "umzug": "^2.1.0",
     "ws": "^5.1.1"
@@ -56,11 +55,7 @@
     "tslint": "5.3.2"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
     "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {

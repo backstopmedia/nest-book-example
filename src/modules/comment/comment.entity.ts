@@ -1,68 +1,29 @@
 import {
-    Table,
-    Column,
-    Model,
-    DataType,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    BeforeValidate,
-    PrimaryKey,
-    ForeignKey,
-    AutoIncrement,
-    BelongsTo,
-    DefaultScope
-} from 'sequelize-typescript';
-import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
-import { User } from '../user/user.entity';
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  VersionColumn,
+  ManyToOne
+} from 'typeorm';
+
 import { Entry } from '../entry/entry.entity';
 
-const tableOptions: IDefineOptions = { timestamp: true, tableName: 'comments' } as IDefineOptions;
+@Entity()
+export class Comment {
+  @PrimaryGeneratedColumn('uuid') id: string;
 
-@Table(tableOptions)
-export class Comment extends Model<Comment> {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
-    public id: number;
+  @Column('text') body: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    public body: string;
+  @Column('simple-json') author: { first_name: string; last_name: string };
 
-    @ForeignKey(() => User)
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    public userId: number;
+  @ManyToOne(type => Entry, entry => entry.comments)
+  entry: Entry;
 
-    @ForeignKey(() => Entry)
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    public entryId: number;
+  @CreateDateColumn() created_at: Date;
 
-    @CreatedAt
-    public createdAt: Date;
+  @UpdateDateColumn() modified_at: Date;
 
-    @UpdatedAt
-    public updatedAt: Date;
-
-    @DeletedAt
-    public deletedAt: Date;
-
-    @BelongsTo(() => User)
-    public user: User;
-
-    @BelongsTo(() => Entry)
-    public entry: Entry;
-
-    @BeforeValidate
-    public static validateData(entry: Entry, options: any) {
-        if (!options.transaction) throw new Error('Missing transaction.');
-    }
+  @VersionColumn() revision: number;
 }

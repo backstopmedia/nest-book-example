@@ -1,22 +1,13 @@
-import { EntryController } from './entry.controller';
-import { entryProvider } from './entry.provider';
-import { EntryService } from './entry.service';
-import { FetchEntryMiddleware } from '../../shared/middlewares/fetch-entry.middleware';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
-import { Module, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Entry } from './entry.entity';
+import { EntriesController } from './entry.controller';
+import { EntriesService } from './entry.service';
 
 @Module({
-    controllers: [EntryController],
-    components: [entryProvider, EntryService],
-    exports: [EntryService]
+  imports: [TypeOrmModule.forFeature([Entry])],
+  controllers: [EntriesController],
+  components: [EntriesService]
 })
-export class EntryModule implements NestModule {
-    public configure(consumer: MiddlewaresConsumer) {
-        consumer
-            .apply(FetchEntryMiddleware)
-            .forRoutes(
-                { path: 'entries/:entryId', method: RequestMethod.GET },
-                { path: 'entries/:entryId', method: RequestMethod.PUT },
-                { path: 'entries/:entryId', method: RequestMethod.DELETE });
-    }
-}
+export class EntriesModule {}

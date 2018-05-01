@@ -1,27 +1,11 @@
-import { CommentController } from './comment.controller';
-import { commentProvider } from './comment.provider';
-import { CommentService } from './comment.service';
-import { EntryModule } from '../entry/entry.module';
-import { FetchCommentMiddleware } from '../../shared/middlewares/fetch-comment.middleware';
-import { FetchEntryMiddleware } from '../../shared/middlewares/fetch-entry.middleware';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
-import { Module, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Comment } from './comment.entity';
+import { CommentsService } from './comment.service';
 
 @Module({
-    imports: [EntryModule],
-    controllers: [CommentController],
-    components: [commentProvider, CommentService],
-    exports: [CommentService]
+  imports: [TypeOrmModule.forFeature([Comment])],
+  components: [CommentsService]
 })
-export class CommentModule implements NestModule {
-    public configure(consumer: MiddlewaresConsumer) {
-        consumer
-            .apply(FetchEntryMiddleware)
-            .forRoutes(CommentController)
-            .apply(FetchCommentMiddleware)
-            .forRoutes(
-                { path: 'entries/:entryId/comments/:commentId', method: RequestMethod.GET },
-                { path: 'entries/:entryId/comments/:commentId', method: RequestMethod.PUT },
-                { path: 'entries/:entryId/comments/:commentId', method: RequestMethod.DELETE })
-    }
-}
+export class EntriesModule {}
