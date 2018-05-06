@@ -202,7 +202,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"Lorem ipsum dolor sit amet.\",\n\t\"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ante dolor, ornare ac placerat nec, malesuada vel neque. Phasellus non ligula nunc. Nullam tincidunt odio eget tellus dignissim vulputate. Cras quis tempus nisi. Sed viverra ornare diam, sit amet molestie nunc facilisis ultricies. Cras rutrum dolor in nulla interdum, sit amet dapibus eros mattis. Nulla eget tempor enim. Sed efficitur sem eu sodales mattis. Cras at massa ultrices, convallis elit nec, interdum diam. Aliquam imperdiet dolor id turpis sagittis aliquet. Praesent laoreet felis sem, porttitor feugiat justo pulvinar et. Fusce nec purus nec dolor sagittis eleifend at sit amet eros. Vestibulum vel nibh eu felis finibus iaculis. Ut nec nisl purus. Maecenas a vestibulum purus, ut faucibus odio.\\nNulla varius urna vitae tortor consectetur, ut ultrices mi feugiat. Maecenas ultricies convallis nibh quis semper. Mauris elementum placerat suscipit. Aliquam interdum sapien in nisi pulvinar, vitae cursus erat mattis. Sed porttitor sem nec dictum luctus. Aliquam efficitur faucibus leo, vitae blandit arcu finibus id. Integer ornare metus sit amet tellus dapibus, ut blandit urna tristique. Nunc dignissim erat pulvinar ipsum pellentesque, vitae eleifend massa faucibus. Ut aliquet egestas turpis eu fermentum. Duis vel ullamcorper purus. Proin vel consequat erat. Phasellus nec viverra tortor, facilisis ullamcorper quam. Duis leo mauris, feugiat congue ornare vestibulum, pharetra at mauris. Nunc fermentum, lorem a pretium venenatis, ex nisl rutrum massa, nec porttitor turpis quam nec ligula.\\nQuisque fringilla elit pellentesque ante cursus condimentum. Morbi tristique nulla ac justo venenatis eleifend. Sed quis diam enim. Nunc venenatis ipsum a commodo interdum. Curabitur ac placerat sapien, in posuere odio. Sed vestibulum eros ac lacinia scelerisque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse ac aliquam nunc. Duis hendrerit sem a mi lacinia, imperdiet pellentesque risus blandit. Nulla facilisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;\\nCras sollicitudin maximus diam. Vestibulum nec nisl eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed dignissim blandit turpis sed bibendum. Cras ante diam, pellentesque id quam vitae, sollicitudin posuere ligula. Nullam volutpat justo sed lectus mollis consectetur. Phasellus quis consectetur ligula, vel varius lorem. Etiam viverra ac ipsum vel suscipit.\"\n}"
+							"raw": "{\n\t\"title\": \"Lorem ipsum dolor sit amet.\",\n\t\"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ante dolor, ornare ac placerat nec, malesuada vel neque. Phasellus non ligula nunc. Nullam tincidunt odio eget tellus dignissim vulputate. Cras quis tempus nisi. Sed viverra ornare diam, sit amet molestie nunc facilisis ultricies. Cras rutrum dolor in nulla interdum, sit amet dapibus eros mattis. Nulla eget tempor enim. Sed efficitur sem eu sodales mattis. Cras at massa ultrices, convallis elit nec, interdum diam. Aliquam imperdiet dolor id turpis sagittis aliquet. Praesent laoreet felis sem, porttitor feugiat justo pulvinar et. Fusce nec purus nec dolor sagittis eleifend at sit amet eros. Vestibulum vel nibh eu felis finibus iaculis. Ut nec nisl purus. Maecenas a vestibulum purus, ut faucibus odio.\\nNulla varius urna vitae tortor consectetur, ut ultrices mi feugiat. Maecenas ultricies convallis nibh quis semper. Mauris elementum placerat suscipit. Aliquam interdum sapien in nisi pulvinar, vitae cursus erat mattis. Sed porttitor sem nec dictum luctus. Aliquam efficitur faucibus leo, vitae blandit arcu finibus id. Integer ornare metus sit amet tellus dapibus, ut blandit urna tristique. Nunc dignissim erat pulvinar ipsum pellentesque, vitae eleifend massa faucibus. Ut aliquet egestas turpis eu fermentum. Duis vel ullamcorper purus. Proin vel consequat erat. Phasellus nec viverra tortor, facilisis ullamcorper quam. Duis leo mauris, feugiat congue ornare vestibulum, pharetra at mauris. Nunc fermentum, lorem a pretium venenatis, ex nisl rutrum massa, nec porttitor turpis quam nec ligula.\\nQuisque fringilla elit pellentesque ante cursus condimentum. Morbi tristique nulla ac justo venenatis eleifend. Sed quis diam enim. Nunc venenatis ipsum a commodo interdum. Curabitur ac placerat sapien, in posuere odio. Sed vestibulum eros ac lacinia scelerisque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse ac aliquam nunc. Duis hendrerit sem a mi lacinia, imperdiet pellentesque risus blandit. Nulla facilisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;\\nCras sollicitudin maximus diam. Vestibulum nec nisl eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed dignissim blandit turpis sed bibendum. Cras ante diam, pellentesque id quam vitae, sollicitudin posuere ligula. Nullam volutpat justo sed lectus mollis consectetur. Phasellus quis consectetur ligula, vel varius lorem. Etiam viverra ac ipsum vel suscipit.\",\n\t\"keywords\": [ \"testA\", \"testB\" ]\n}"
 						},
 						"url": {
 							"raw": "{{server}}/entries",
@@ -247,16 +247,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"Changing the title\",\n\t\"content\": \"Changing the content\"\n}"
+							"raw": "{\n\t\"title\": \"Changing the title\",\n\t\"content\": \"Changing the content\",\n\t\"keywords\": [\"testD\", \"testC\", \"testE\", \"testF\"]\n}"
 						},
 						"url": {
-							"raw": "{{server}}/entries/1",
+							"raw": "{{server}}/entries/4",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"entries",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -294,13 +294,13 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{server}}/entries/2/comments",
+							"raw": "{{server}}/entries/4/comments",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"entries",
-								"2",
+								"4",
 								"comments"
 							]
 						}
@@ -322,13 +322,13 @@
 							"raw": "{\n\t\"body\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque efficitur maximus sem vel posuere. Maecenas ultricies libero nec dui mattis fermentum. Curabitur eu est sed justo imperdiet venenatis. Proin consequat maximus lorem, non posuere metus auctor in. Suspendisse at purus a quam semper posuere. Quisque tristique fermentum ornare. In id ex eleifend ante eleifend euismod. Proin scelerisque, justo ut consequat tincidunt, dui mi viverra nibh, vitae aliquet ex diam commodo ligula. Suspendisse pretium volutpat mauris, et euismod lacus rhoncus id. Curabitur est lorem, vulputate sit amet faucibus vel, finibus non turpis. Nullam sit amet lacus vitae quam venenatis dictum. Nulla porttitor odio eget faucibus semper. Cras quis tortor nunc. Mauris at consectetur nulla. Ut consequat, mi eget aliquet ullamcorper, diam neque egestas mauris, in volutpat sapien neque ut dolor. Sed eu volutpat elit, ut volutpat erat.\"\n}"
 						},
 						"url": {
-							"raw": "{{server}}/entries/2/comments",
+							"raw": "{{server}}/entries/4/comments",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"entries",
-								"2",
+								"4",
 								"comments"
 							]
 						}
@@ -401,6 +401,68 @@
 								"2",
 								"comments",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "keywords",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Keywords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{server}}/keywords",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"keywords"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Keyword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{server}}/keywords/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"keywords",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hot Keywords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{server}}/keywords/hot",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"keywords",
+								"hot"
 							]
 						}
 					},
