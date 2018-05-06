@@ -12,7 +12,7 @@ import { ClientController } from './client.controller';
 import { angularUniversalProviders } from './client.providers';
 import {EXPRESS_REF } from '@nestjs/core/injector';
 import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import * as path from 'path';
 
 function root(sub: string): string {
@@ -32,7 +32,7 @@ export class ClientModule implements NestModule {
   static forRoot(): DynamicModule {
     const options: AngularUniversalOptions = {
       viewsPath: environment.clientPaths.client,
-      bundle: require('../../main.server')
+      bundle: require('../../../main.server')
     };
 
     return {

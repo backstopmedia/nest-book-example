@@ -3,7 +3,7 @@ import { NestApplication } from '@nestjs/core';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import { AngularUniversalOptions } from '../interfaces/angular-universal-options.interface';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 export function setupUniversal(app: NestApplication, ngOptions: AngularUniversalOptions) {
   const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = ngOptions.bundle;
