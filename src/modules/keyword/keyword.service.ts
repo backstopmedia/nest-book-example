@@ -1,11 +1,9 @@
 import { Component, Inject } from '@nestjs/common';
 import { IFindOptions } from 'sequelize-typescript';
-import { Op, fn, col, literal } from 'sequelize';
-import { IKeyword, IKeywordService } from './interfaces/index';
+import { col, fn, Op } from 'sequelize';
+import { IKeywordService } from './interfaces/index';
 import { Keyword } from './keyword.entity';
-import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 import { KeywordEntry } from './keywordEntry.entity';
-import { Entry } from '../entry/entry.entity';
 
 @Component()
 export class KeywordService implements IKeywordService {

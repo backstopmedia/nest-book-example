@@ -1,4 +1,4 @@
-import {Middleware, NestMiddleware, ExpressMiddleware, HttpStatus} from '@nestjs/common';
+import { ExpressMiddleware, HttpStatus, Middleware, NestMiddleware } from '@nestjs/common';
 import * as passport from 'passport';
 import { UserService } from '../../modules/user/user.service';
 

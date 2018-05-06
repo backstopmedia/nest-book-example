@@ -1,5 +1,4 @@
-import { CheckLoggedInUserGuard } from '../../shared/guards/check-loggedIn-user.guard';
-import { Controller, Get, HttpStatus, Res, Query, Param } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, Query, Res } from '@nestjs/common';
 import { KeywordService } from './keyword.service';
 
 @Controller()

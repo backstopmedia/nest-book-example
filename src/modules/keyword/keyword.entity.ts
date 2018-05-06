@@ -1,17 +1,16 @@
 import {
-    Table,
-    Column,
-    Model,
-    DataType,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    BeforeValidate,
-    PrimaryKey,
     AutoIncrement,
+    BeforeValidate,
+    BelongsToMany,
+    Column,
+    CreatedAt,
+    DataType,
     DefaultScope,
-    HasMany,
-    BelongsToMany
+    DeletedAt,
+    Model,
+    PrimaryKey,
+    Table,
+    UpdatedAt
 } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
 import { Entry } from '../entry/entry.entity';

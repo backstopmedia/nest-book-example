@@ -1,7 +1,5 @@
-
-
 import { Inject } from '@nestjs/common';
-import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Sequelize } from 'sequelize-typescript';
 import { LinkKeywordEntryCommand } from '../impl/linkKeywordEntry.command';
 import { Keyword } from '../../keyword.entity';

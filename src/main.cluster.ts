@@ -1,9 +1,7 @@
 import * as cluster from 'cluster';
 import * as os from 'os';
 import { NestFactory } from '@nestjs/core';
-import { Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { RpcValidationException } from './shared/exceptions/rpcValidation.exception';
 import { RpcValidationFilter } from './shared/filters/rpcValidation.filter';
 import { microserviceServerConfig } from './shared/config/microservice.config';
 

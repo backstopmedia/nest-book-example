@@ -1,7 +1,7 @@
 import 'zone.js/dist/zone-node';
 import { enableProdMode } from '@angular/core';
-import {NestApplication, NestFactory} from '@nestjs/core';
-import { ValidationPipe, INestApplication } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ApplicationModule } from './app.module';
 import { environment } from './environments/environment';
 

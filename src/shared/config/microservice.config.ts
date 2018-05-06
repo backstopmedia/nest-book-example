@@ -1,4 +1,3 @@
-import { Transport } from '@nestjs/microservices';
 import { NestMicroserviceOptions } from '@nestjs/common/interfaces/microservices/nest-microservice-options.interface';
 import { RabbitMQTransportServer } from '../transports/rabbitmg-transport.server';
 

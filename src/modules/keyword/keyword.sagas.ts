@@ -1,12 +1,12 @@
 import { Component, Inject } from '@nestjs/common';
-import { EventObservable, ICommand } from '@nestjs/cqrs';
+import { EventObservable } from '@nestjs/cqrs';
 import { Sequelize } from 'sequelize-typescript';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
-import { map, mergeMap, switchMap, filter, mergeAll } from 'rxjs/operators';
+import { mergeMap, switchMap } from 'rxjs/operators';
 import { UpdateKeywordLinksEvent } from './events/impl/updateKeywordLinks.event';
 import { Keyword } from './keyword.entity';
 import { Entry } from '../entry/entry.entity';

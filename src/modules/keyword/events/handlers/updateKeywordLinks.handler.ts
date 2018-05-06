@@ -5,7 +5,6 @@ import { Transaction } from 'sequelize';
 import { UpdateKeywordLinksEvent } from '../impl/updateKeywordLinks.event';
 import { Keyword } from '../../keyword.entity';
 import { Entry } from '../../../entry/entry.entity';
-import { CLIENT_RENEG_LIMIT } from 'tls';
 
 @EventsHandler(UpdateKeywordLinksEvent)
 export class UpdateKeywordLinksEventHandler implements IEventHandler<UpdateKeywordLinksEvent> {

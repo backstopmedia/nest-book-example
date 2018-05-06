@@ -3,7 +3,7 @@
 import * as path from 'path';
 import * as childProcess from 'child_process';
 import * as Promise from 'bluebird';
-import { databaseConfig } from './src/shared/config/dataBase.config';
+import { databaseConfig } from './src/shared/config/data-base.config';
 import { Sequelize } from 'sequelize-typescript';
 import * as Umzug from 'umzug';
 

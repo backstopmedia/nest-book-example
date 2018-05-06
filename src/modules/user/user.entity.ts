@@ -1,17 +1,18 @@
 import * as crypto from 'crypto';
 import {
-    Table,
-    Column,
-    Model,
-    DataType,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    BeforeValidate,
-    BeforeCreate,
-    PrimaryKey,
     AutoIncrement,
-    HasMany, DefaultScope
+    BeforeCreate,
+    BeforeValidate,
+    Column,
+    CreatedAt,
+    DataType,
+    DefaultScope,
+    DeletedAt,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table,
+    UpdatedAt
 } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
 import { Entry } from '../entry/entry.entity';

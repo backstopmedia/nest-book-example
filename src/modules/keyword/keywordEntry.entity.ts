@@ -1,11 +1,4 @@
-import {
-    Table,
-    Column,
-    Model,
-    DataType,
-    CreatedAt,
-    ForeignKey
-} from 'sequelize-typescript';
+import { Column, CreatedAt, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
 import { Entry } from '../entry/entry.entity';
 import { Keyword } from './keyword.entity';

@@ -1,16 +1,11 @@
-import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body,
-    Param, UseGuards, UseFilters, UsePipes, Req, UseInterceptors, Inject } from '@nestjs/common';
-import { MessagePattern, Client, Transport, ClientProxy } from '@nestjs/microservices';
+import { Body, Controller, Delete, Get, HttpStatus, Inject, Param, Post, Put, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import { ClientProxy, MessagePattern } from '@nestjs/microservices';
 import { UserService } from './user.service';
 import { CheckLoggedInUserGuard } from '../../shared/guards/check-loggedIn-user.guard';
 import { RpcValidationException } from '../../shared/exceptions/rpcValidation.exception';
-import { RpcValidationFilter } from '../../shared/filters/rpcValidation.filter';
-import { RpcValidationPipe } from '../../shared/pipes/rpcValidation.pipe';
 import { CreateUserRequest } from './requests/create-user.request';
 import { RpcCheckLoggedInUserGuard } from '../../shared/guards/rpcCheckLoggedInUser.guard';
 import { CleanUserInterceptor } from '../../shared/interceptors/cleanUser.interceptor';
-import { microserviceConfig } from '../../shared/config/microservice.config';
-import { RabbitMQTransportClient } from '../../shared/transports/rabbitmq-transport.client';
 
 @Controller()
 export class UserController {

@@ -1,6 +1,6 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { EventBus, CQRSModule, CommandBus } from '@nestjs/cqrs';
+import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
 import { keywordProvider } from '../keyword/keyword.provider';
 import { KeywordController } from './keyword.controller';
 import { keywordEventHandlers } from './events/handlers';

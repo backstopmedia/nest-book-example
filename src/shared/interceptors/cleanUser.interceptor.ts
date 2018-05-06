@@ -1,6 +1,6 @@
-import { Interceptor, NestInterceptor, ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, Interceptor, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Interceptor()
 export class CleanUserInterceptor implements NestInterceptor {

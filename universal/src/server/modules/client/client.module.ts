@@ -1,17 +1,13 @@
 import * as express from 'express';
-import {
-  Module,
-  Inject,
-  RequestMethod,
-} from '@nestjs/common';
-import { DynamicModule, NestModule, OnModuleInit } from '@nestjs/common/interfaces';
+import { Inject, Module } from '@nestjs/common';
+import { DynamicModule, NestModule } from '@nestjs/common/interfaces';
 import { NestApplication } from '@nestjs/core';
 import { AngularUniversalOptions } from './interfaces/angular-universal-options.interface';
 import { ANGULAR_UNIVERSAL_OPTIONS } from './client.constants';
 import { ClientController } from './client.controller';
 import { angularUniversalProviders } from './client.providers';
-import {EXPRESS_REF } from '@nestjs/core/injector';
-import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
+import { EXPRESS_REF } from '@nestjs/core/injector';
+import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { environment } from '../../environments/environment';
 import * as path from 'path';
 

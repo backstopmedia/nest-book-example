@@ -1,4 +1,4 @@
-import {Component, HttpException, HttpStatus} from '@nestjs/common';
+import { Component, HttpException, HttpStatus } from '@nestjs/common';
 import { Hero } from '../../../shared/hero';
 import { HEROES } from './mock-heroes';
 
