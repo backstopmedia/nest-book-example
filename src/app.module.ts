@@ -11,6 +11,7 @@ import { Module, NestModule, RequestMethod } from '@nestjs/common';
 import { strategy } from './shared/config/passport-strategy.config';
 import { UserGatewayModule } from './gateways/user/user.gateway.module';
 import { UserModule } from './modules/user/user.module';
+import { KeywordModule } from './modules/keyword/keyword.module';
 
 @Module({
     imports: [
@@ -20,7 +21,8 @@ import { UserModule } from './modules/user/user.module';
         EntryModule,
         CommentModule,
         UserGatewayModule,
-        CommentGatewayModule
+        CommentGatewayModule,
+        KeywordModule
     ],
     controllers: [],
     components: [],
