@@ -9,9 +9,11 @@
     "start:dev": "nodemon",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
-    "test": "jest",
-    "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test": "jest --config=jest.json",
+    "test:watch": "jest --watch --config=jest.json",
+    "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
+    "e2e": "jest --config=e2e/jest-e2e.json --forceExit",
+    "e2e:watch": "jest --watch --config=e2e/jest-e2e.json",
     "migrate": "ts-node migrate.ts"
   },
   "dependencies": {
@@ -41,26 +43,16 @@
   },
   "devDependencies": {
     "@types/express": "^4.0.39",
-    "@types/jest": "^21.1.8",
+    "@types/jest": "^22.2.3",
     "@types/node": "^9.3.0",
     "@types/supertest": "^2.0.4",
     "express": "^4.16.3",
-    "jest": "^21.2.1",
+    "jest": "^22.4.3",
     "nodemon": "^1.14.1",
     "prettier": "^1.11.1",
     "supertest": "^3.0.0",
-    "ts-jest": "^21.2.4",
-    "ts-node": "^4.1.0",
+    "ts-jest": "^22.4.4",
     "tsconfig-paths": "^3.1.1",
     "tslint": "5.3.2"
-  },
-  "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage"
   }
 }

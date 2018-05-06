@@ -1,0 +1,21 @@
+{
+  "moduleFileExtensions": ["js", "ts", "json"],
+  "transform": {
+    "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  },
+  "testRegex": "/src/.*\\.(test|spec).ts",
+  "collectCoverageFrom": [
+    "src/modules/entry/entry.controller.ts",
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ],
+  "coverageReporters": ["json", "lcov", "text"],
+  "coverageThreshold": {
+    "global": {
+      "branches": 80,
+      "functions": 80,
+      "lines": 80,
+      "statements": 80
+    }
+  }
+}
