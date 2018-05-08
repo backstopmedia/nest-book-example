@@ -20,8 +20,11 @@ import { RpcValidationException } from '../../shared/exceptions/rpcValidation.ex
 import { CreateUserRequest } from './requests/create-user.request';
 import { RpcCheckLoggedInUserGuard } from '../../shared/guards/rpcCheckLoggedInUser.guard';
 import { CleanUserInterceptor } from '../../shared/interceptors/cleanUser.interceptor';
+import { UpdateUserRequest } from './requests/update-user.request';
+import { ApiUseTags } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags('users')
 export class UserController {
     constructor(
         private readonly userService: UserService,
@@ -49,8 +52,8 @@ export class UserController {
     }
 
     @Post('users')
-    public async create(@Body() body: any, @Res() res) {
-        this.client.send({ cmd: 'users.create' }, body).subscribe({
+    public async create(@Body() body: CreateUserRequest, @Res() res) {
+        this.client.send({cmd: 'users.create'}, body).subscribe({
             next: () => {
                 res.status(HttpStatus.CREATED).send();
             },
@@ -95,22 +98,15 @@ export class UserController {
 
     @Put('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
-    public async update(
-        @Param('userId') userId: number,
-        @Body() body: any,
-        @Req() req,
-        @Res() res
-    ) {
-        this.client
-            .send({ cmd: 'users.update' }, { userId, body, user: req.user })
-            .subscribe({
-                next: () => {
-                    res.status(HttpStatus.OK).send();
-                },
-                error: error => {
-                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-                }
-            });
+    public async update(@Param('userId') userId: number, @Body() body: UpdateUserRequest, @Req() req, @Res() res) {
+        this.client.send({cmd: 'users.update'}, {userId, body, user: req.user}).subscribe({
+            next: () => {
+                res.status(HttpStatus.OK).send();
+            },
+            error: error => {
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+            }
+        });
     }
 
     @MessagePattern({ cmd: 'users.update' })

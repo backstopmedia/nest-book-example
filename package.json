@@ -14,13 +14,15 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "migrate": "ts-node migrate.ts"
+    "migrate": "ts-node migrate.ts",
+    "genDocs": "ts-node -r tsconfig-paths/register src/docGenerator.ts"
   },
   "dependencies": {
     "@nestjs/common": "^5.1.0",
     "@nestjs/core": "^5.1.0",
     "@nestjs/cqrs": "^5.1.1",
     "@nestjs/microservices": "^5.1.0",
+    "@nestjs/swagger": "^1.3.0",
     "@nestjs/passport": "^1.1.0",
     "@nestjs/testing": "^5.1.0",
     "@nestjs/websockets": "^5.1.0",
@@ -42,6 +44,7 @@
   "devDependencies": {
     "@types/amqplib": "^0.5.7",
     "@types/express": "^4.16.0",
+    "@types/fs-extra": "^5.0.2",
     "@types/jest": "^23.1.3",
     "@types/jsonwebtoken": "^7.2.7",
     "@types/node": "^8.10.20",
@@ -52,6 +55,7 @@
     "@types/umzug": "^2.1.1",
     "@types/ws": "^5.1.2",
     "express": "^4.16.3",
+    "fs-extra": "^6.0.0",
     "jest": "^23.2.0",
     "nodemon": "^1.17.5",
     "prettier": "^1.13.7",

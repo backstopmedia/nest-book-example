@@ -9,8 +9,11 @@ import {
     Body
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { LoginRequest } from './requests/login.request';
+import { ApiImplicitBody, ApiUseTags } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags('authentication')
 export class AuthenticationController {
     constructor(
         private readonly authenticationService: AuthenticationService,
@@ -19,7 +22,7 @@ export class AuthenticationController {
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    public async login(@Body() body: any, @Res() res): Promise<any> {
+    public async login(@Body() body: LoginRequest, @Res() res): Promise<any> {
         if (!body.email || !body.password) {
             return res
                 .status(HttpStatus.BAD_REQUEST)

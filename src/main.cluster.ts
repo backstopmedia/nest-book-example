@@ -1,12 +1,22 @@
 import * as cluster from 'cluster';
 import * as os from 'os';
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { RpcValidationFilter } from './shared/filters/rpcValidation.filter';
 import { microserviceServerConfig } from './shared/config/microservice.config';
 
 async function bootstrapApp() {
     const app = await NestFactory.create(AppModule);
+
+    const options = new DocumentBuilder().build();
+        // .setTitle('Blog example')
+        // .setDescription('The blog API description')
+        // .setVersion('1.0')
+        // .addTag('blog')
+        // .build();
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('/api', app, document);
 
     await app.listen(process.env.PORT || 3000);
 }
