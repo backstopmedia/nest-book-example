@@ -13,7 +13,7 @@ describe('CommentService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            components: [
+            providers: [
                 commentProvider,
                 databaseProvider,
                 CommentService

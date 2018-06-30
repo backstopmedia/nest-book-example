@@ -1,9 +1,9 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IComment, ICommentService } from './interfaces/index';
 import { Comment } from './comment.entity';
 import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
-@Component()
+@Injectable()
 export class CommentService implements ICommentService {
     constructor(@Inject('CommentRepository') private readonly CommentRepository: typeof Comment,
                 @Inject('SequelizeInstance') private readonly sequelizeInstance,

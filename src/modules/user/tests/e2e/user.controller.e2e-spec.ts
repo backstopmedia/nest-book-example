@@ -22,7 +22,7 @@ describe('UserController', () => {
         const module = await Test.createTestingModule({
             imports: [DatabaseModule],
             controllers: [UserController],
-            components: [userProvider, UserService]
+            providers: [userProvider, UserService]
         })
         .overrideComponent(UserService).useValue(userService)
         .compile();

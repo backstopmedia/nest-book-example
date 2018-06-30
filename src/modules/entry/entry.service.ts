@@ -1,8 +1,8 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IEntry, IEntryService } from './interfaces/index';
 import { Entry } from './entry.entity';
 
-@Component()
+@Injectable()
 export class EntryService implements IEntryService {
     constructor(@Inject('EntryRepository') private readonly EntryRepository: typeof Entry,
                 @Inject('SequelizeInstance') private readonly sequelizeInstance) { }

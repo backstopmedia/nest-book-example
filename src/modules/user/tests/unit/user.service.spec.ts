@@ -14,7 +14,7 @@ describe('UserService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            components: [
+            providers: [
                 userProvider,
                 databaseProvider,
                 UserService

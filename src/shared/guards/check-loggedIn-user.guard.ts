@@ -1,9 +1,10 @@
-import { Guard, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 
-@Guard()
+@Injectable()
 export class CheckLoggedInUserGuard implements CanActivate {
-    canActivate(req, context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+        const req = context.switchToHttp().getRequest();
         return Number(req.params.userId) === req.user.id;
     }
 }

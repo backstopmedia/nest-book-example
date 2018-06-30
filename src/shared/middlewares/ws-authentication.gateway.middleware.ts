@@ -1,9 +1,9 @@
 import * as jwt from 'jsonwebtoken';
 import { GatewayMiddleware, WsException } from '@nestjs/websockets';
-import { Middleware } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserService } from '../../modules/user/user.service';
 
-@Middleware()
+@Injectable()
 export class WsAuthenticationGatewayMiddleware implements GatewayMiddleware {
     constructor(private userService: UserService) { }
     resolve() {

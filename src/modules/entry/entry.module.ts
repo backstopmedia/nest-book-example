@@ -11,7 +11,7 @@ import { ModuleRef } from '@nestjs/core';
 @Module({
     imports: [CQRSModule],
     controllers: [EntryController],
-    components: [entryProvider, EntryService, ...entryCommandHandlers],
+    providers: [entryProvider, EntryService, ...entryCommandHandlers],
     exports: [EntryService]
 })
 export class EntryModule implements NestModule, OnModuleInit {
@@ -23,10 +23,7 @@ export class EntryModule implements NestModule, OnModuleInit {
     public configure(consumer: MiddlewaresConsumer) {
         consumer
             .apply(FetchEntryMiddleware)
-            .forRoutes(
-                { path: 'entries/:entryId', method: RequestMethod.GET },
-                { path: 'entries/:entryId', method: RequestMethod.PUT },
-                { path: 'entries/:entryId', method: RequestMethod.DELETE });
+            .forRoutes(EntryController);
     }
 
     public onModuleInit() {

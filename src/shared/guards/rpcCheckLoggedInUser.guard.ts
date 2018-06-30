@@ -1,9 +1,10 @@
-import { Guard, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 
-@Guard()
+@Injectable()
 export class RpcCheckLoggedInUserGuard implements CanActivate {
-    canActivate(data, context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+        const data = context.switchToRpc().getData();
         return Number(data.userId) === data.user.id;
     }
 }

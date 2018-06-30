@@ -1,5 +1,4 @@
-import { CheckLoggedInUserGuard } from '../../shared/guards/check-loggedIn-user.guard';
-import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { Entry } from '../../shared/decorators/entry.decorator';
 import { EntryService } from './entry.service';
 import { IEntry } from './interfaces';
@@ -35,7 +34,7 @@ export class EntryController {
         ));
 
         if (error) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(result);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
         } else {
             return res.status(HttpStatus.CREATED).send();
         }

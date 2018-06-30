@@ -8,7 +8,7 @@ import { RabbitMQTransportModule } from '../../shared/transports/rabbitmq-transp
 @Module({
     imports: [RabbitMQTransportModule],
     controllers: [UserController],
-    components: [userProvider, UserService],
+    providers: [userProvider, UserService],
     exports: [UserService]
 })
 export class UserModule {}

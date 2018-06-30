@@ -9,7 +9,7 @@ describe('AuthenticationService', () => {
     beforeEach(async () => {
         const module = await Test.createTestingModule({
             imports: [UserModule],
-            components: [AuthenticationService]
+            providers: [AuthenticationService]
         })
         .overrideComponent(UserService).useValue({ findOne: () => true })
         .compile();

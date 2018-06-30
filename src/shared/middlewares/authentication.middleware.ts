@@ -1,12 +1,12 @@
-import { ExpressMiddleware, HttpStatus, Middleware, NestMiddleware } from '@nestjs/common';
+import { MiddlewareFunction, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import * as passport from 'passport';
 import { UserService } from '../../modules/user/user.service';
 
-@Middleware()
+@Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
     constructor(private userService: UserService) { }
 
-    async resolve(strategy: string): Promise<ExpressMiddleware> {
+    async resolve(strategy: string): Promise<MiddlewareFunction> {
         return async (req, res, next) => {
             return passport.authenticate(strategy, async (...args: any[]) => {
                 const [,  payload, err] = args;

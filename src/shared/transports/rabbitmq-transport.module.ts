@@ -10,7 +10,7 @@ const ClientProxy = {
 @Module({
     imports: [],
     controllers: [],
-    components: [ClientProxy],
+    providers: [ClientProxy],
     exports: [ClientProxy]
 })
 export class RabbitMQTransportModule {}

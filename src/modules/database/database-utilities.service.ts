@@ -1,7 +1,7 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Model } from 'sequelize-typescript';
 
-@Component()
+@Injectable()
 export class DatabaseUtilitiesService {
     /**
      * @description: Assign new value in the model found in the database.

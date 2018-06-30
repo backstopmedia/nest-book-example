@@ -12,7 +12,7 @@ import { KeywordSagas } from './keyword.sagas';
 @Module({
     imports: [CQRSModule],
     controllers: [KeywordController],
-    components: [
+    providers: [
         keywordProvider,
         keywordEntryProvider,
         ...keywordEventHandlers,

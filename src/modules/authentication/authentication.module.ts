@@ -19,7 +19,7 @@ export class AuthenticationModule {
             module: AuthenticationModule,
             imports: [UserModule],
             controllers: [AuthenticationController],
-            components: [AuthenticationService, strategyProvider],
+            providers: [AuthenticationService, strategyProvider],
             exports: [strategyProvider]
         };
     }

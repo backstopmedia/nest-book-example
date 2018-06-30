@@ -1,11 +1,11 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IFindOptions } from 'sequelize-typescript';
 import { col, fn, Op } from 'sequelize';
 import { IKeywordService } from './interfaces/index';
 import { Keyword } from './keyword.entity';
 import { KeywordEntry } from './keywordEntry.entity';
 
-@Component()
+@Injectable()
 export class KeywordService implements IKeywordService {
     constructor(@Inject('KeywordRepository') private readonly keywordRepository: typeof Keyword,
                 @Inject('KeywordEntryRepository') private readonly keywordEntryRepository: typeof KeywordEntry) { }

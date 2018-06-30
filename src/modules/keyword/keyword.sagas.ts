@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { EventObservable } from '@nestjs/cqrs';
 import { Sequelize } from 'sequelize-typescript';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,7 @@ import { Entry } from '../entry/entry.entity';
 import { UnlinkKeywordEntryCommand } from './commands/impl/unlinkKeywordEntry.command';
 import { LinkKeywordEntryCommand } from './commands/impl/linkKeywordEntry.command';
 
-@Component()
+@Injectable()
 export class KeywordSagas {
     constructor(
         @Inject('KeywordRepository') private readonly keywordRepository: typeof Keyword,

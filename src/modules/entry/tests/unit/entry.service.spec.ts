@@ -13,7 +13,7 @@ describe('EntryService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            components: [
+            providers: [
                 entryProvider,
                 databaseProvider,
                 EntryService

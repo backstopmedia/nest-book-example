@@ -1,9 +1,9 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IUser, IUserService } from './interfaces/index';
 import { User } from './user.entity';
 import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
-@Component()
+@Injectable()
 export class UserService implements IUserService {
     constructor(@Inject('UserRepository') private readonly UserRepository: typeof User,
                 @Inject('SequelizeInstance') private readonly sequelizeInstance,

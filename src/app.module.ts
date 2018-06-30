@@ -25,22 +25,16 @@ import { KeywordModule } from './modules/keyword/keyword.module';
         KeywordModule
     ],
     controllers: [],
-    components: [],
+    providers: [],
 })
 export class AppModule implements NestModule {
     public configure(consumer: MiddlewaresConsumer) {
-        const userControllerAuthenticatedRoutes = [
-            { path: '/users', method: RequestMethod.GET },
-            { path: '/users/:id', method: RequestMethod.GET },
-            { path: '/users/:id', method: RequestMethod.PUT },
-            { path: '/users/:id', method: RequestMethod.DELETE }
-        ];
-
         consumer
             .apply(AuthenticationMiddleware)
             .with(strategy)
             .forRoutes(
-                ...userControllerAuthenticatedRoutes,
+                '/users',
+                '/users/:id',
                 EntryController,
                 CommentController
             );

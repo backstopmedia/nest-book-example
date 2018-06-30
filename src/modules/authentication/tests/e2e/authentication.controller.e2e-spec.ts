@@ -16,7 +16,7 @@ describe('UserController', () => {
         const module = await Test.createTestingModule({
             imports: [UserModule],
             controllers: [AuthenticationController],
-            components: [AuthenticationService]
+            providers: [AuthenticationService]
         })
         .overrideComponent(UserService).useValue(userService)
         .compile();

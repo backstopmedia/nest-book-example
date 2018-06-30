@@ -1,8 +1,8 @@
-import { ExecutionContext, Interceptor, NestInterceptor } from '@nestjs/common';
+import { ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-@Interceptor()
+@Injectable()
 export class CleanUserInterceptor implements NestInterceptor {
     intercept(dataOrRequest, context: ExecutionContext, stream$: Observable<any>): Observable<any> {
         return stream$.pipe(

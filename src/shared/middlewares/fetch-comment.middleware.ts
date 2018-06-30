@@ -1,13 +1,13 @@
 import { CommentService } from '../../modules/comment/comment.service';
-import { Middleware, NestMiddleware, ExpressMiddleware, HttpStatus } from '@nestjs/common';
+import { Injectable, NestMiddleware, MiddlewareFunction, HttpStatus } from '@nestjs/common';
 
-@Middleware()
+@Injectable()
 export class FetchCommentMiddleware implements NestMiddleware {
     constructor(private commentService: CommentService) { }
 
-    async resolve(strategy: string): Promise<ExpressMiddleware> {
+    async resolve(strategy: string): Promise<MiddlewareFunction> {
         return async (req, res, next) => {
-            if (!req.params.commentId) return res.status(HttpStatus.BAD_REQUEST).send('Missing commentId.');
+            if (!req.params.commentId) return next();
 
             const comment = await this.commentService.findOne({
                 where: {
