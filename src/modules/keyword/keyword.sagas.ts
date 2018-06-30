@@ -1,11 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { EventObservable } from '@nestjs/cqrs';
 import { Sequelize } from 'sequelize-typescript';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/of';
+import { from, of } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
 import { UpdateKeywordLinksEvent } from './events/impl/updateKeywordLinks.event';
 import { Keyword } from './keyword.entity';
@@ -27,11 +23,11 @@ export class KeywordSagas {
     }
 
     private compileKeywordLinkCommands(event: UpdateKeywordLinksEvent) {
-        return Observable.fromPromise(this.keywordRepository.findAll({
+        return from(this.keywordRepository.findAll({
             include: [{ model: Entry, where: { id: event.entryId }}]
         })).pipe(
             switchMap(keywordEntities =>
-                Observable.of(
+                of(
                     ...this.getUnlinkCommands(event, keywordEntities),
                     ...this.getLinkCommands(event, keywordEntities)
                 )

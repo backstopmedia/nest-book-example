@@ -1,32 +1,69 @@
 import * as amqp from 'amqplib';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, ReadPacket, WritePacket, PacketId } from '@nestjs/microservices';
+import { Subject } from 'rxjs';
+import { filter, pluck, map, take } from 'rxjs/operators';
 
 export class RabbitMQTransportClient extends ClientProxy {
+    private server: amqp.Connection;
+    private channel: amqp.Channel;
+    private responsesSubject: Subject<amqp.Message>;
+
     constructor(
         private readonly url: string,
         private readonly queue: string) {
         super();
     }
 
-    protected async sendSingleMessage(messageObj, callback: (err, result, disposed?: boolean) => void) {
-        const server = await amqp.connect(this.url);
-        const channel = await server.createChannel();
-
-        const { sub, pub } = this.getQueues();
-        channel.assertQueue(sub, { durable: false });
-        channel.assertQueue(pub, { durable: false });
-
-        channel.consume(pub, (message) => this.handleMessage(message, server, callback), { noAck: true });
-        channel.sendToQueue(sub, Buffer.from(JSON.stringify(messageObj)));
+    public async close() {
+        this.channel && await this.channel.close();
+        this.server && await this.server.close();
     }
 
-    private handleMessage(message, server, callback: (err, result, disposed?: boolean) => void) {
-        const { content } = message;
-        const { err, response, disposed } = JSON.parse(content.toString());
-        if (disposed) {
-            server.close();
+    public connect(): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.server = await amqp.connect(this.url);
+                this.channel = await this.server.createChannel();
+
+                const { sub, pub } = this.getQueues();
+                await this.channel.assertQueue(sub, { durable: false });
+                await this.channel.assertQueue(pub, { durable: false });
+
+                this.responsesSubject = new Subject();
+                this.channel.consume(pub, (message) => { this.responsesSubject.next(message); }, { noAck: true });
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    protected async publish(partialPacket: ReadPacket, callback: (packet: WritePacket) => void) {
+        if (!this.server || !this.channel) {
+            await this.connect();
         }
-        callback(err, response, disposed);
+        
+        const packet = this.assignPacketId(partialPacket);
+        const { sub } = this.getQueues();
+
+        this.responsesSubject.asObservable().pipe(
+            pluck('content'),
+            map(content => JSON.parse(content.toString()) as WritePacket & PacketId),
+            filter(message => message.id === packet.id),
+            take(1)
+        ).subscribe(({err, response, isDisposed}) => {
+            if (isDisposed || err) {
+                callback({
+                    err,
+                    response: null,
+                    isDisposed: true
+                });
+            }
+
+            callback({err, response});
+        });
+
+        this.channel.sendToQueue(sub, Buffer.from(JSON.stringify(packet)));
     }
 
     private getQueues() {

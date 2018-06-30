@@ -1,6 +1,7 @@
 import * as amqp from 'amqplib';
-import { Server, CustomTransportStrategy } from '@nestjs/microservices';
-import { Observable } from 'rxjs/Observable';
+import { Server, CustomTransportStrategy, ReadPacket, PacketId, WritePacket } from '@nestjs/microservices';
+import { NO_PATTERN_MESSAGE } from '@nestjs/microservices/constants';
+import { Observable } from 'rxjs';
 
 export class RabbitMQTransportServer extends Server implements CustomTransportStrategy {
     private server: amqp.Connection = null;
@@ -26,23 +27,27 @@ export class RabbitMQTransportServer extends Server implements CustomTransportSt
         this.server && this.server.close();
     }
 
-    private async handleMessage(message) {
+    private async handleMessage(message: amqp.Message) {
         const { content } = message;
-        const messageObj = JSON.parse(content.toString());
+        const packet = JSON.parse(content.toString()) as ReadPacket & PacketId;
+        const handler = this.messageHandlers[JSON.stringify(packet.pattern)];
 
-        const handlers = this.getHandlers();
-        const pattern = JSON.stringify(messageObj.pattern);
-        if (!this.messageHandlers[pattern]) {
-            return;
+        if (!handler) {
+            return this.sendMessage({
+                id: packet.id,
+                err: NO_PATTERN_MESSAGE
+            });
         }
 
-        const handler = this.messageHandlers[pattern];
-        const response$ = this.transformToObservable(await handler(messageObj.data)) as Observable<any>;
-        response$ && this.send(response$, (data) => this.sendMessage(data));
+        const response$ = this.transformToObservable(await handler(packet.data)) as Observable<any>;
+        response$ && this.send(response$, data => this.sendMessage({
+            id: packet.id,
+            ...data
+        }));
     }
 
-    private sendMessage(message) {
-        const buffer = Buffer.from(JSON.stringify(message));
+    private sendMessage(packet: WritePacket & PacketId) {
+        const buffer = Buffer.from(JSON.stringify(packet));
         this.channel.sendToQueue(`${this.queue}_pub`, buffer);
     }
 

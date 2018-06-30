@@ -1,10 +1,7 @@
-import 'rxjs/add/observable/empty';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/switchMap';
 import * as WebSocket from 'ws';
 import { INestApplication, WebSocketAdapter } from '@nestjs/common';
-import { Observable } from 'rxjs/Observable';
+import { Observable, fromEvent, NEVER } from 'rxjs';
+import { switchMap, filter } from 'rxjs/operators';
 import { UserModule } from '../../modules/user/user.module';
 import { UserService } from '../../modules/user/user.service';
 import { WsAuthenticationGatewayMiddleware } from '../middlewares/ws-authentication.gateway.middleware';
@@ -27,17 +24,17 @@ export class WsAdapter implements WebSocketAdapter {
     }
 
     bindMessageHandlers(client: WebSocket, handlers: MessageMappingProperties[], process: (data) => Observable<any>) {
-        Observable.fromEvent(client, 'message')
-            .switchMap((buffer) => this.bindMessageHandler(buffer, handlers, process))
-            .filter((result) => !!result)
-            .subscribe((response) => client.send(JSON.stringify(response)));
+        fromEvent(client, 'message').pipe(
+            switchMap((buffer) => this.bindMessageHandler(buffer, handlers, process)),
+            filter((result) => !!result)
+        ).subscribe((response) => client.send(JSON.stringify(response)));
     }
 
     bindMessageHandler(buffer, handlers: MessageMappingProperties[], process: (data) => Observable<any>): Observable<any> {
         const data = JSON.parse(buffer.data);
         const messageHandler = handlers.find((handler) => handler.message === data.type);
         if (!messageHandler) {
-            return Observable.empty();
+            return NEVER;
         }
         const { callback } = messageHandler;
         return process(callback(data));
