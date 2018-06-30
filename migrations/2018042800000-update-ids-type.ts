@@ -1,6 +1,6 @@
 export async function up(sequelize) {
     // language=PostgreSQL
-    sequelize.query(`
+    await sequelize.query(`
         ALTER TABLE users ALTER COLUMN id TYPE INTEGER; 
         ALTER TABLE entries ALTER COLUMN id TYPE INTEGER; 
         ALTER TABLE comments ALTER COLUMN id TYPE INTEGER; 
@@ -11,5 +11,5 @@ export async function up(sequelize) {
 
 export async function down(sequelize) {
     // language=PostgreSQL
-    sequelize.query(``);
+    await sequelize.query(``);
 }

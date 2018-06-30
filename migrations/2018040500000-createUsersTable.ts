@@ -1,6 +1,6 @@
 export async function up(sequelize) {
     // language=PostgreSQL
-    sequelize.query(`
+    await sequelize.query(`
         CREATE TABLE "users" (
             "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
             "firstName" VARCHAR(30) NOT NULL,
@@ -19,5 +19,5 @@ export async function up(sequelize) {
 
 export async function down(sequelize) {
     // language=PostgreSQL
-    sequelize.query(`DROP TABLE users`);
+    await sequelize.query(`DROP TABLE users`);
 }
