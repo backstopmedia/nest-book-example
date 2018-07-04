@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package example.nestBook;
+
+message User {
+    string firstName = 1;
+    string lastName = 2;
+    string email = 3;
+}
+
+message ShowUserRequest {
+    double userId = 1;
+}
+
+message ShowUserResponse {
+    User user = 1;
+}
+
+service UserService {
+    rpc show (ShowUserRequest) returns (ShowUserResponse);
+}
