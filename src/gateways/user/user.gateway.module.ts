@@ -3,7 +3,7 @@ import { UserGateway } from './user.gateway';
 import { UserModule } from '../../modules/user/user.module';
 
 @Module({
-    imports: [UserModule],
-    providers: [UserGateway]
+	imports: [UserModule],
+	providers: [UserGateway]
 })
-export class UserGatewayModule { }
+export class UserGatewayModule {}

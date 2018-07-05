@@ -17,13 +17,13 @@
     "migrate": "ts-node migrate.ts"
   },
   "dependencies": {
-    "@nestjs/common": "^5.0.1",
-    "@nestjs/core": "^5.0.1",
+    "@nestjs/common": "^5.1.0",
+    "@nestjs/core": "^5.1.0",
     "@nestjs/cqrs": "^5.1.1",
-    "@nestjs/microservices": "^5.0.1",
+    "@nestjs/microservices": "^5.1.0",
     "@nestjs/passport": "^1.1.0",
-    "@nestjs/testing": "^5.0.1",
-    "@nestjs/websockets": "^5.0.1",
+    "@nestjs/testing": "^5.1.0",
+    "@nestjs/websockets": "^5.1.0",
     "amqplib": "^0.5.2",
     "class-validator": "^0.8.5",
     "crypto": "^1.0.1",
