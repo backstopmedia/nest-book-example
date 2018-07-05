@@ -14,35 +14,35 @@ import { UserModule } from './modules/user/user.module';
 import { KeywordModule } from './modules/keyword/keyword.module';
 
 @Module({
-	imports: [
-		DatabaseModule,
-		AuthenticationModule.forRoot('jwt'),
-		UserModule,
-		EntryModule,
-		CommentModule,
-		UserGatewayModule,
-		CommentGatewayModule,
-		KeywordModule
-	],
-	controllers: [],
-	providers: []
+    imports: [
+        DatabaseModule,
+        AuthenticationModule.forRoot('jwt'),
+        UserModule,
+        EntryModule,
+        CommentModule,
+        UserGatewayModule,
+        CommentGatewayModule,
+        KeywordModule
+    ],
+    controllers: [],
+    providers: []
 })
 export class AppModule implements NestModule {
-	public configure(consumer: MiddlewareConsumer) {
-		const userControllerAuthenticatedRoutes = [
-			{ path: '/users', method: RequestMethod.GET },
-			{ path: '/users/:id', method: RequestMethod.GET },
-			{ path: '/users/:id', method: RequestMethod.PUT },
-			{ path: '/users/:id', method: RequestMethod.DELETE }
-		];
+    public configure(consumer: MiddlewareConsumer) {
+        const userControllerAuthenticatedRoutes = [
+            { path: '/users', method: RequestMethod.GET },
+            { path: '/users/:id', method: RequestMethod.GET },
+            { path: '/users/:id', method: RequestMethod.PUT },
+            { path: '/users/:id', method: RequestMethod.DELETE }
+        ];
 
-		consumer
-			.apply(AuthenticationMiddleware)
-			.with(strategy)
-			.forRoutes(
-				...userControllerAuthenticatedRoutes,
-				EntryController,
-				CommentController
-			);
-	}
+        consumer
+            .apply(AuthenticationMiddleware)
+            .with(strategy)
+            .forRoutes(
+                ...userControllerAuthenticatedRoutes,
+                EntryController,
+                CommentController
+            );
+    }
 }

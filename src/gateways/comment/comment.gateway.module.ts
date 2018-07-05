@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import { UserModule } from '../../modules/user/user.module';
 
 @Module({
-	imports: [UserModule, CommentModule],
-	providers: [CommentGateway]
+    imports: [UserModule, CommentModule],
+    providers: [CommentGateway]
 })
 export class CommentGatewayModule {}

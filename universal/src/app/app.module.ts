@@ -13,20 +13,20 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
-	imports: [
-		BrowserModule.withServerTransition({ appId: 'tour-of-heroes' }),
-		FormsModule,
-		AppRoutingModule,
-		HttpClientModule
-	],
-	declarations: [
-		AppComponent,
-		DashboardComponent,
-		HeroesComponent,
-		HeroDetailComponent,
-		MessagesComponent,
-		HeroSearchComponent
-	],
-	bootstrap: [AppComponent]
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'tour-of-heroes' }),
+        FormsModule,
+        AppRoutingModule,
+        HttpClientModule
+    ],
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        HeroesComponent,
+        HeroDetailComponent,
+        MessagesComponent,
+        HeroSearchComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Keyword } from '../keyword.entity';
 
 export interface IKeywordService {
-	findAll(): Promise<Array<Keyword>>;
+    findAll(): Promise<Array<Keyword>>;
 }

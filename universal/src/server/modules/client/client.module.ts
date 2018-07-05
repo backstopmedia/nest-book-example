@@ -12,38 +12,38 @@ import { environment } from '../../environments/environment';
 import * as path from 'path';
 
 function root(sub: string): string {
-	return path.join(path.resolve(), sub);
+    return path.join(path.resolve(), sub);
 }
 
 @Module({
-	controllers: [ClientController],
-	components: [...angularUniversalProviders]
+    controllers: [ClientController],
+    components: [...angularUniversalProviders]
 })
 export class ClientModule implements NestModule {
-	constructor(
-		@Inject(ANGULAR_UNIVERSAL_OPTIONS)
-		private readonly ngOptions: AngularUniversalOptions,
-		@Inject(EXPRESS_REF) private readonly app: NestApplication
-	) {}
+    constructor(
+        @Inject(ANGULAR_UNIVERSAL_OPTIONS)
+        private readonly ngOptions: AngularUniversalOptions,
+        @Inject(EXPRESS_REF) private readonly app: NestApplication
+    ) {}
 
-	static forRoot(): DynamicModule {
-		const options: AngularUniversalOptions = {
-			viewsPath: environment.clientPaths.client,
-			bundle: require('../../../main.server')
-		};
+    static forRoot(): DynamicModule {
+        const options: AngularUniversalOptions = {
+            viewsPath: environment.clientPaths.client,
+            bundle: require('../../../main.server')
+        };
 
-		return {
-			module: ClientModule,
-			components: [
-				{
-					provide: ANGULAR_UNIVERSAL_OPTIONS,
-					useValue: options
-				}
-			]
-		};
-	}
+        return {
+            module: ClientModule,
+            components: [
+                {
+                    provide: ANGULAR_UNIVERSAL_OPTIONS,
+                    useValue: options
+                }
+            ]
+        };
+    }
 
-	configure(consumer: MiddlewareConsumer): void {
-		this.app.use(express.static(root('dist/angular.io-example')));
-	}
+    configure(consumer: MiddlewareConsumer): void {
+        this.app.use(express.static(root('dist/angular.io-example')));
+    }
 }

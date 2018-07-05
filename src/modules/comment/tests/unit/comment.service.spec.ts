@@ -7,25 +7,25 @@ import { IComment } from '../../interfaces/index';
 import { Test } from '@nestjs/testing';
 
 describe('CommentService', () => {
-	let sequelizeInstance: any;
-	let commentService: CommentService;
-	let fakeComments: Array<IComment>;
+    let sequelizeInstance: any;
+    let commentService: CommentService;
+    let fakeComments: Array<IComment>;
 
-	beforeAll(async () => {
-		const module = await Test.createTestingModule({
-			providers: [commentProvider, databaseProvider, CommentService]
-		}).compile();
+    beforeAll(async () => {
+        const module = await Test.createTestingModule({
+            providers: [commentProvider, databaseProvider, CommentService]
+        }).compile();
 
-		sequelizeInstance = module.get<any>(databaseProvider.provide);
+        sequelizeInstance = module.get<any>(databaseProvider.provide);
 
-		commentService = module.get<CommentService>(CommentService);
-	});
+        commentService = module.get<CommentService>(CommentService);
+    });
 
-	beforeEach(async () => {
-		await sequelizeInstance.sync();
+    beforeEach(async () => {
+        await sequelizeInstance.sync();
 
-		const [, userId] = await sequelizeInstance.query(
-			`
+        const [, userId] = await sequelizeInstance.query(
+            `
             INSERT INTO users ("email", "firstName", "lastName", "password", "birthday", "createdAt", "updatedAt")
             values(
                 'test@test.fr', 
@@ -37,11 +37,11 @@ describe('CommentService', () => {
                 '${moment().format('YYYY-MM-DD')}'
             );
         `,
-			{ type: sequelizeInstance.QueryTypes.INSERT }
-		);
+            { type: sequelizeInstance.QueryTypes.INSERT }
+        );
 
-		const [, entryId] = await sequelizeInstance.query(
-			`
+        const [, entryId] = await sequelizeInstance.query(
+            `
             INSERT INTO entries ("title", "content", "userId", "createdAt", "updatedAt")
             values(
                 'entryTitle', 
@@ -51,21 +51,21 @@ describe('CommentService', () => {
                 '${moment().format('YYYY-MM-DD')}'
             );
         `,
-			{ type: sequelizeInstance.QueryTypes.INSERT }
-		);
+            { type: sequelizeInstance.QueryTypes.INSERT }
+        );
 
-		fakeComments = utilities.generateFakeComments(userId, entryId);
-	});
+        fakeComments = utilities.generateFakeComments(userId, entryId);
+    });
 
-	it('should create a new comment', async () => {
-		const comment = await commentService.create(fakeComments[0]);
+    it('should create a new comment', async () => {
+        const comment = await commentService.create(fakeComments[0]);
 
-		expect(comment).not.toBeNull();
-		expect(comment.body).toBe(fakeComments[0].body);
-	});
+        expect(comment).not.toBeNull();
+        expect(comment.body).toBe(fakeComments[0].body);
+    });
 
-	it('should find all comments', async () => {
-		await sequelizeInstance.query(`
+    it('should find all comments', async () => {
+        await sequelizeInstance.query(`
             INSERT INTO comments ("body", "entryId", "userId", "createdAt", "updatedAt")
             values(
                 '${fakeComments[0].body}', 
@@ -76,15 +76,15 @@ describe('CommentService', () => {
             );
         `);
 
-		const comments = await commentService.findAll();
+        const comments = await commentService.findAll();
 
-		expect(comments.length).toBe(1);
-		expect(comments[0]).not.toBeNull();
-		expect(comments[0].body).toBe(fakeComments[0].body);
-	});
+        expect(comments.length).toBe(1);
+        expect(comments[0]).not.toBeNull();
+        expect(comments[0].body).toBe(fakeComments[0].body);
+    });
 
-	it('should find one comment', async () => {
-		await sequelizeInstance.query(`
+    it('should find one comment', async () => {
+        await sequelizeInstance.query(`
             INSERT INTO comments ("body", "entryId", "userId", "createdAt", "updatedAt")
             values(
                 '${fakeComments[0].body}', 
@@ -95,14 +95,14 @@ describe('CommentService', () => {
             );
         `);
 
-		const comment = await commentService.findOne();
+        const comment = await commentService.findOne();
 
-		expect(comment).not.toBeNull();
-		expect(comment.body).toBe(fakeComments[0].body);
-	});
+        expect(comment).not.toBeNull();
+        expect(comment.body).toBe(fakeComments[0].body);
+    });
 
-	it('should find comment by id', async () => {
-		await sequelizeInstance.query(`
+    it('should find comment by id', async () => {
+        await sequelizeInstance.query(`
             INSERT INTO comments ("body", "entryId", "userId", "createdAt", "updatedAt")
             values(
                 '${fakeComments[0].body}', 
@@ -113,14 +113,14 @@ describe('CommentService', () => {
             );
         `);
 
-		const comment = await commentService.findById(1);
+        const comment = await commentService.findById(1);
 
-		expect(comment).not.toBeNull();
-		expect(comment.body).toBe(fakeComments[0].body);
-	});
+        expect(comment).not.toBeNull();
+        expect(comment.body).toBe(fakeComments[0].body);
+    });
 
-	it('should delete comment by id', async () => {
-		await sequelizeInstance.query(`
+    it('should delete comment by id', async () => {
+        await sequelizeInstance.query(`
             INSERT INTO comments ("body", "entryId", "userId", "createdAt", "updatedAt")
             values(
                 '${fakeComments[0].body}', 
@@ -131,14 +131,14 @@ describe('CommentService', () => {
             );
         `);
 
-		await commentService.delete(1);
-		const comments = await commentService.findAll();
+        await commentService.delete(1);
+        const comments = await commentService.findAll();
 
-		expect(comments.length).toBe(0);
-	});
+        expect(comments.length).toBe(0);
+    });
 
-	it('should update comment', async () => {
-		await sequelizeInstance.query(`
+    it('should update comment', async () => {
+        await sequelizeInstance.query(`
             INSERT INTO comments ("body", "entryId", "userId", "createdAt", "updatedAt")
             values(
                 '${fakeComments[0].body}', 
@@ -149,11 +149,11 @@ describe('CommentService', () => {
             );
         `);
 
-		const comment = await commentService.update(1, {
-			body: 'updatedTitle'
-		} as IComment);
+        const comment = await commentService.update(1, {
+            body: 'updatedTitle'
+        } as IComment);
 
-		expect(comment).not.toBeNull();
-		expect(comment.body).toBe('updatedTitle');
-	});
+        expect(comment).not.toBeNull();
+        expect(comment.body).toBe('updatedTitle');
+    });
 });

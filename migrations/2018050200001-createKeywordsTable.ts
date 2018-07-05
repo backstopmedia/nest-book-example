@@ -1,6 +1,6 @@
 export async function up(sequelize) {
-	// language=PostgreSQL
-	await sequelize.query(`
+    // language=PostgreSQL
+    await sequelize.query(`
         CREATE TABLE "keywords" (
             "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
             "keyword" VARCHAR(30) UNIQUE NOT NULL,
@@ -22,11 +22,11 @@ export async function up(sequelize) {
         );
   `);
 
-	console.log('*Table keywords created!*');
+    console.log('*Table keywords created!*');
 }
 
 export async function down(sequelize) {
-	// language=PostgreSQL
-	await sequelize.query(`DROP TABLE keywords_entries`);
-	await sequelize.query(`DROP TABLE keywords`);
+    // language=PostgreSQL
+    await sequelize.query(`DROP TABLE keywords_entries`);
+    await sequelize.query(`DROP TABLE keywords`);
 }

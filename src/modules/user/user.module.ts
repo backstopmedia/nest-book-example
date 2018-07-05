@@ -5,9 +5,9 @@ import { UserController } from './user.controller';
 import { RabbitMQTransportModule } from '../../shared/transports/rabbitmq-transport.module';
 
 @Module({
-	imports: [RabbitMQTransportModule],
-	controllers: [UserController],
-	providers: [userProvider, UserService],
-	exports: [UserService]
+    imports: [RabbitMQTransportModule],
+    controllers: [UserController],
+    providers: [userProvider, UserService],
+    exports: [UserService]
 })
 export class UserModule {}

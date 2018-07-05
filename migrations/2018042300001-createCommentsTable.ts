@@ -1,6 +1,6 @@
 export async function up(sequelize) {
-	// language=PostgreSQL
-	await sequelize.query(`
+    // language=PostgreSQL
+    await sequelize.query(`
         CREATE TABLE "comments" (
             "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
             "body" TEXT NOT NULL,
@@ -18,10 +18,10 @@ export async function up(sequelize) {
         );
     `);
 
-	console.log('*Table comment created!*');
+    console.log('*Table comment created!*');
 }
 
 export async function down(sequelize) {
-	// language=PostgreSQL
-	await sequelize.query(`DROP TABLE comments`);
+    // language=PostgreSQL
+    await sequelize.query(`DROP TABLE comments`);
 }
