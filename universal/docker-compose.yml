@@ -1,0 +1,21 @@
+version: "3"
+volumes:
+  node_modules:
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
+    environment:
+      NODE_ENV: "development"
+      DISABLE_CLIENT_MODULE: "true"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    command: >
+      sh -c "npm install && npm run start:server"
