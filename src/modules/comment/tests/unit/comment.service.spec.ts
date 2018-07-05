@@ -5,6 +5,7 @@ import { CommentService } from '../../comment.service';
 import { databaseProvider } from '../../../database/database.provider';
 import { IComment } from '../../interfaces/index';
 import { Test } from '@nestjs/testing';
+import { DatabaseModule } from '../../../database/database.module';
 
 describe('CommentService', () => {
     let sequelizeInstance: any;
@@ -13,7 +14,8 @@ describe('CommentService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            providers: [commentProvider, databaseProvider, CommentService]
+            imports: [DatabaseModule],
+            providers: [commentProvider, CommentService]
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
@@ -54,7 +56,7 @@ describe('CommentService', () => {
             { type: sequelizeInstance.QueryTypes.INSERT }
         );
 
-        fakeComments = utilities.generateFakeComments(userId, entryId);
+        return (fakeComments = utilities.generateFakeComments(userId, entryId));
     });
 
     it('should create a new comment', async () => {

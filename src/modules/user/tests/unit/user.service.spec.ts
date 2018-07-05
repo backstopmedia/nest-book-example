@@ -6,6 +6,7 @@ import { databaseProvider } from '../../../database/database.provider';
 import { UserService } from '../../user.service';
 import { userProvider } from '../../user.provider';
 import { IUser } from '../../interfaces/index';
+import { DatabaseModule } from '../../../database/database.module';
 
 describe('UserService', () => {
     let sequelizeInstance: any;
@@ -14,23 +15,23 @@ describe('UserService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            providers: [userProvider, databaseProvider, UserService]
+            imports: [DatabaseModule],
+            providers: [userProvider, UserService]
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
-
         userService = module.get<UserService>(UserService);
     });
 
     beforeEach(async () => {
         await sequelizeInstance.sync();
 
-        fakeUsers = utilities.generateFakeUsers().map(user => {
+        return (fakeUsers = utilities.generateFakeUsers().map(user => {
             user.password = crypto
                 .createHmac('sha256', user.password)
                 .digest('hex');
             return user;
-        });
+        }));
     });
 
     it('should create a new user', async () => {

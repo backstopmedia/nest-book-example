@@ -6,10 +6,10 @@ import { MiddlewareConsumer } from '@nestjs/common/interfaces/middleware';
 import {
     Module,
     NestModule,
-    RequestMethod,
-    OnModuleInit
+    OnModuleInit,
+    RequestMethod
 } from '@nestjs/common';
-import { CQRSModule, CommandBus } from '@nestjs/cqrs';
+import { CommandBus, CQRSModule } from '@nestjs/cqrs';
 import { entryCommandHandlers } from './commands/handlers/index';
 import { ModuleRef } from '@nestjs/core';
 

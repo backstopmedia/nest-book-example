@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IUser, IUserService } from './interfaces/index';
 import { User } from './user.entity';
 import { DatabaseUtilitiesService } from '../database/database-utilities.service';

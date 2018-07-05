@@ -5,6 +5,7 @@ import { entryProvider } from '../../entry.provider';
 import { EntryService } from '../../entry.service';
 import { IEntry } from '../../interfaces/index';
 import { Test } from '@nestjs/testing';
+import { DatabaseModule } from '../../../database/database.module';
 
 describe('EntryService', () => {
     let sequelizeInstance: any;
@@ -13,7 +14,8 @@ describe('EntryService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            providers: [entryProvider, databaseProvider, EntryService]
+            imports: [DatabaseModule],
+            providers: [entryProvider, EntryService]
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
