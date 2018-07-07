@@ -5,13 +5,15 @@ import { environment } from '@nau/server/shared/config/environment';
 
 @Module({})
 export class ApplicationModule {
-  static moduleFactory(): DynamicModule {
-    return {
-      module: ApplicationModule,
-      imports: [
-        HeroesModule,
-        ...(environment.disableClientModule ? [] : [ClientModule.forRoot()])
-      ]
-    };
-  }
+    static moduleFactory(): DynamicModule {
+        return {
+            module: ApplicationModule,
+            imports: [
+                HeroesModule,
+                ...(environment.disableClientModule
+                    ? []
+                    : [ClientModule.forRoot()])
+            ]
+        };
+    }
 }

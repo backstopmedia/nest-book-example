@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsDefined, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsDefined, IsString } from 'class-validator';
 import { ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateCommentRequest {

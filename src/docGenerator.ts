@@ -8,12 +8,15 @@ import { AppModule } from './app.module';
 async function writeDoc() {
     const app = await NestFactory.create(AppModule);
 
-    const options = new DocumentBuilder()
-        .build();
+    const options = new DocumentBuilder().build();
     const document = SwaggerModule.createDocument(app, options);
 
     fs.ensureDirSync(path.join(process.cwd(), 'dist'));
-    fs.writeJsonSync(path.join(process.cwd(), 'dist', 'api-doc.json'), document, { spaces: 2 });
+    fs.writeJsonSync(
+        path.join(process.cwd(), 'dist', 'api-doc.json'),
+        document,
+        { spaces: 2 }
+    );
 }
 
 writeDoc();

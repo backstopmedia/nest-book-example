@@ -53,7 +53,7 @@ export class UserController {
 
     @Post('users')
     public async create(@Body() body: CreateUserRequest, @Res() res) {
-        this.client.send({cmd: 'users.create'}, body).subscribe({
+        this.client.send({ cmd: 'users.create' }, body).subscribe({
             next: () => {
                 res.status(HttpStatus.CREATED).send();
             },
@@ -98,15 +98,22 @@ export class UserController {
 
     @Put('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
-    public async update(@Param('userId') userId: number, @Body() body: UpdateUserRequest, @Req() req, @Res() res) {
-        this.client.send({cmd: 'users.update'}, {userId, body, user: req.user}).subscribe({
-            next: () => {
-                res.status(HttpStatus.OK).send();
-            },
-            error: error => {
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-            }
-        });
+    public async update(
+        @Param('userId') userId: number,
+        @Body() body: UpdateUserRequest,
+        @Req() req,
+        @Res() res
+    ) {
+        this.client
+            .send({ cmd: 'users.update' }, { userId, body, user: req.user })
+            .subscribe({
+                next: () => {
+                    res.status(HttpStatus.OK).send();
+                },
+                error: error => {
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+                }
+            });
     }
 
     @MessagePattern({ cmd: 'users.update' })

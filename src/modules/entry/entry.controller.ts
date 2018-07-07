@@ -1,5 +1,16 @@
 import { ApiUseTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Put, Delete, HttpStatus, Res, Body, Param, UseGuards } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Put,
+    Delete,
+    HttpStatus,
+    Res,
+    Body,
+    Param,
+    UseGuards
+} from '@nestjs/common';
 import { Entry } from '../../shared/decorators/entry.decorator';
 import { EntryService } from './entry.service';
 import { IEntry } from './interfaces';
@@ -27,8 +38,15 @@ export class EntryController {
     }
 
     @Post('entries')
-    public async create(@User() user: IUser, @Body() body: CreateEntryRequest, @Res() res) {
-        if (!body || (body && Object.keys(body).length === 0)) return res.status(HttpStatus.BAD_REQUEST).send('Missing some information.');
+    public async create(
+        @User() user: IUser,
+        @Body() body: CreateEntryRequest,
+        @Res() res
+    ) {
+        if (!body || (body && Object.keys(body).length === 0))
+            return res
+                .status(HttpStatus.BAD_REQUEST)
+                .send('Missing some information.');
 
         const error = await this.commandBus.execute(
             new CreateEntryCommand(
@@ -59,14 +77,19 @@ export class EntryController {
         @Body() body: UpdateEntryRequest,
         @Res() res
     ) {
-        if (user.id !== entry.userId) return res.status(HttpStatus.NOT_FOUND).send('Unable to find the entry.');
-        const error = await this.commandBus.execute(new UpdateEntryCommand(
-            entryId,
-            body.title,
-            body.content,
-            body.keywords,
-            user.id
-        ));
+        if (user.id !== entry.userId)
+            return res
+                .status(HttpStatus.NOT_FOUND)
+                .send('Unable to find the entry.');
+        const error = await this.commandBus.execute(
+            new UpdateEntryCommand(
+                entryId,
+                body.title,
+                body.content,
+                body.keywords,
+                user.id
+            )
+        );
 
         if (error) {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
