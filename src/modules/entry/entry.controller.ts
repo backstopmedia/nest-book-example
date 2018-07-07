@@ -1,13 +1,15 @@
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
-    Body,
     Controller,
-    Delete,
     Get,
-    HttpStatus,
-    Param,
     Post,
     Put,
-    Res
+    Delete,
+    HttpStatus,
+    Res,
+    Body,
+    Param,
+    UseGuards
 } from '@nestjs/common';
 import { Entry } from '../../shared/decorators/entry.decorator';
 import { EntryService } from './entry.service';
@@ -18,8 +20,12 @@ import { CommandBus } from '@nestjs/cqrs';
 import { CreateEntryCommand } from './commands/impl/createEntry.command';
 import { UpdateEntryCommand } from './commands/impl/updateEntry.command';
 import { DeleteEntryCommand } from './commands/impl/deleteEntry.command';
+import { CreateEntryRequest } from './requests/create-entry.request';
+import { UpdateEntryRequest } from './requests/update-entry.request';
 
 @Controller()
+@ApiUseTags('entries')
+@ApiBearerAuth()
 export class EntryController {
     constructor(
         private readonly entryService: EntryService,
@@ -33,7 +39,11 @@ export class EntryController {
     }
 
     @Post('entries')
-    public async create(@User() user: IUser, @Body() body: any, @Res() res) {
+    public async create(
+        @User() user: IUser,
+        @Body() body: CreateEntryRequest,
+        @Res() res
+    ) {
         if (!body || (body && Object.keys(body).length === 0))
             return res
                 .status(HttpStatus.BAD_REQUEST)
@@ -65,7 +75,7 @@ export class EntryController {
         @User() user: IUser,
         @Entry() entry: IEntry,
         @Param('entryId') entryId: number,
-        @Body() body: any,
+        @Body() body: UpdateEntryRequest,
         @Res() res
     ) {
         if (user.id !== entry.userId)

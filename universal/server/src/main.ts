@@ -7,20 +7,20 @@ import { ApplicationModule } from './app.module';
 declare const module: any;
 
 async function bootstrap() {
-  if (environment.production) {
-    enableProdMode();
-  }
+    if (environment.production) {
+        enableProdMode();
+    }
 
-  const app = await NestFactory.create(ApplicationModule.moduleFactory());
+    const app = await NestFactory.create(ApplicationModule.moduleFactory());
 
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
+    if (module.hot) {
+        module.hot.accept();
+        module.hot.dispose(() => app.close());
+    }
 
-  await app.listen(environment.port);
+    await app.listen(environment.port);
 }
 
 bootstrap()
-  .then(() => console.log(`Server started on port ${environment.port}`))
-  .catch(err => console.error(`Server startup failed`, err));
+    .then(() => console.log(`Server started on port ${environment.port}`))
+    .catch(err => console.error(`Server startup failed`, err));

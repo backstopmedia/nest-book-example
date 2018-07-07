@@ -1,7 +1,10 @@
 import { Controller, Get, HttpStatus, Param, Query, Res } from '@nestjs/common';
 import { KeywordService } from './keyword.service';
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags('keywords')
+@ApiBearerAuth()
 export class KeywordController {
     constructor(private readonly keywordService: KeywordService) {}
 

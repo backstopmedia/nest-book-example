@@ -6,13 +6,13 @@ import { AngularUniversalOptions } from '@nau/server/client/interfaces/angular-u
 
 @Controller()
 export class ClientController {
-  constructor(
-    @Inject(ANGULAR_UNIVERSAL_OPTIONS)
-    private readonly ngOptions: AngularUniversalOptions
-  ) {}
+    constructor(
+        @Inject(ANGULAR_UNIVERSAL_OPTIONS)
+        private readonly ngOptions: AngularUniversalOptions
+    ) {}
 
-  @Get('*')
-  render(@Res() res: Response, @Req() req: Request) {
-    res.render(join(this.ngOptions.viewsPath, 'index.html'), { req });
-  }
+    @Get('*')
+    render(@Res() res: Response, @Req() req: Request) {
+        res.render(join(this.ngOptions.viewsPath, 'index.html'), { req });
+    }
 }

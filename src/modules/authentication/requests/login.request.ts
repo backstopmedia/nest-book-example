@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 
-export class CreateUserRequest {
+export class LoginRequest {
     @IsEmail()
     @IsNotEmpty()
     @IsDefined()
@@ -22,16 +22,4 @@ export class CreateUserRequest {
     @IsString()
     @ApiModelProperty()
     public password: string;
-
-    @IsNotEmpty()
-    @IsDefined()
-    @IsString()
-    @ApiModelProperty()
-    public firstName: string;
-
-    @IsNotEmpty()
-    @IsDefined()
-    @IsString()
-    @ApiModelProperty()
-    public lastName: string;
 }

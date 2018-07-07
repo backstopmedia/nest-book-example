@@ -20,8 +20,11 @@ import { RpcValidationException } from '../../shared/exceptions/rpcValidation.ex
 import { CreateUserRequest } from './requests/create-user.request';
 import { RpcCheckLoggedInUserGuard } from '../../shared/guards/rpcCheckLoggedInUser.guard';
 import { CleanUserInterceptor } from '../../shared/interceptors/cleanUser.interceptor';
+import { UpdateUserRequest } from './requests/update-user.request';
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags('users')
 export class UserController {
     constructor(
         private readonly userService: UserService,
@@ -30,6 +33,7 @@ export class UserController {
 
     @Get('users')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async index(@Res() res) {
         this.client.send({ cmd: 'users.index' }, {}).subscribe({
             next: users => {
@@ -49,7 +53,7 @@ export class UserController {
     }
 
     @Post('users')
-    public async create(@Body() body: any, @Res() res) {
+    public async create(@Body() body: CreateUserRequest, @Res() res) {
         this.client.send({ cmd: 'users.create' }, body).subscribe({
             next: () => {
                 res.status(HttpStatus.CREATED).send();
@@ -73,6 +77,7 @@ export class UserController {
 
     @Get('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async show(@Param('userId') userId: number, @Req() req, @Res() res) {
         this.client
             .send({ cmd: 'users.show' }, { userId, user: req.user })
@@ -95,9 +100,10 @@ export class UserController {
 
     @Put('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async update(
         @Param('userId') userId: number,
-        @Body() body: any,
+        @Body() body: UpdateUserRequest,
         @Req() req,
         @Res() res
     ) {
@@ -121,6 +127,7 @@ export class UserController {
 
     @Delete('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async delete(
         @Param('userId') userId: number,
         @Req() req,
