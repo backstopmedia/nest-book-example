@@ -14,25 +14,22 @@ The [Angular-Universal](https://github.com/enten/angular-universal) starter kit 
 * [webpack 4](https://github.com/webpack/webpack/tree/v4.5.0) as module bundler
 * [node](https://nodejs.org/dist/latest-v8.x/docs/api/) as server
 * [NestJS 5](https://github.com/nestjs/nest) as request handler
-* [udk-builder](https://github.com/enten/udk/blob/master/angular/lib/udk-builder.js) as architect builder
-* [ng-udkc](https://github.com/enten/udk#dev-container) for development with live reload
 
 ## Getting started
+
+Before you begin, you should ensure you have Docker installed and setup on your machine.
 
 ```shell
 git clone https://github.com/patrickhousley/nest-angular-universal my-project
 cd my-project
 npm install
-npm start
 ```
 
 ## Development server
 
-This project uses [ng-udkc](https://github.com/enten/udk#dev-container) as the dev server to provide watching and reload of both the front-end and back-end application. When meta-files or source files are changed, the appropriate application will be rebuilt and restarted. To start the dev server, simply run `npm start`.
+This project makes use of Docker to run the NestJS server while also providing a support mechanism for additional development dependencies like Redis, PostgreSQL, etc. To start the development server, execute `docker-compose up` in a shell. In a separate shell, run `npm start` to start the Angular application.
 
-You can still use `ng serve` but your APIs will not be available when you load the front-end application.
-
-**Note:** Changes to the front-end will cause the back-end application to restart since the back-end application bundles the Angular Universal version of the front-end application.
+**Note** Since development does not execute the NestJS server with the Angular universal bundle, changes to the Angular application may break universal rendering without knowing it. For this reason, be sure you build the project and use `node dist/server.js` to test out the universal bundle.
 
 ## Code scaffolding
 

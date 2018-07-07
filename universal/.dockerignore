@@ -1,0 +1,15 @@
+.git
+.circleci
+dist
+coverage
+node_modules
+npm-debug.log
+.dockerignore
+.editorconfig
+.gitignore
+.prettierrc
+.stylelintrc
+angular.json
+docker-compose.yml
+nodemon.json
+README.md
