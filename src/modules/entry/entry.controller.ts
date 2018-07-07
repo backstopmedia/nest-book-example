@@ -1,4 +1,4 @@
-import { ApiUseTags } from '@nestjs/swagger';
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
     Controller,
     Get,
@@ -25,6 +25,7 @@ import { UpdateEntryRequest } from './requests/update-entry.request';
 
 @Controller()
 @ApiUseTags('entries')
+@ApiBearerAuth()
 export class EntryController {
     constructor(
         private readonly entryService: EntryService,

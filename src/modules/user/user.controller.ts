@@ -21,7 +21,7 @@ import { CreateUserRequest } from './requests/create-user.request';
 import { RpcCheckLoggedInUserGuard } from '../../shared/guards/rpcCheckLoggedInUser.guard';
 import { CleanUserInterceptor } from '../../shared/interceptors/cleanUser.interceptor';
 import { UpdateUserRequest } from './requests/update-user.request';
-import { ApiUseTags } from '@nestjs/swagger';
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller()
 @ApiUseTags('users')
@@ -33,6 +33,7 @@ export class UserController {
 
     @Get('users')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async index(@Res() res) {
         this.client.send({ cmd: 'users.index' }, {}).subscribe({
             next: users => {
@@ -76,6 +77,7 @@ export class UserController {
 
     @Get('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async show(@Param('userId') userId: number, @Req() req, @Res() res) {
         this.client
             .send({ cmd: 'users.show' }, { userId, user: req.user })
@@ -98,6 +100,7 @@ export class UserController {
 
     @Put('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async update(
         @Param('userId') userId: number,
         @Body() body: UpdateUserRequest,
@@ -124,6 +127,7 @@ export class UserController {
 
     @Delete('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
+    @ApiBearerAuth()
     public async delete(
         @Param('userId') userId: number,
         @Req() req,
