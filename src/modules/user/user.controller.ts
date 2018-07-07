@@ -1,4 +1,18 @@
-import { Body, Controller, Delete, Get, HttpStatus, Inject, Param, Post, Put, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpStatus,
+    Inject,
+    Param,
+    Post,
+    Put,
+    Req,
+    Res,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import { ClientProxy, MessagePattern } from '@nestjs/microservices';
 import { UserService } from './user.service';
 import { CheckLoggedInUserGuard } from '../../shared/guards/check-loggedIn-user.guard';
@@ -9,18 +23,15 @@ import { CleanUserInterceptor } from '../../shared/interceptors/cleanUser.interc
 
 @Controller()
 export class UserController {
-    
     constructor(
         private readonly userService: UserService,
-        @Inject('ClientProxy')
-        private readonly client: ClientProxy
-    ) {
-    }
+        @Inject('ClientProxy') private readonly client: ClientProxy
+    ) {}
 
     @Get('users')
     @UseGuards(CheckLoggedInUserGuard)
     public async index(@Res() res) {
-        this.client.send({cmd: 'users.index'}, {}).subscribe({
+        this.client.send({ cmd: 'users.index' }, {}).subscribe({
             next: users => {
                 res.status(HttpStatus.OK).json(users);
             },
@@ -30,7 +41,7 @@ export class UserController {
         });
     }
 
-    @MessagePattern({cmd: 'users.index'})
+    @MessagePattern({ cmd: 'users.index' })
     @UseGuards(CheckLoggedInUserGuard)
     public async rpcIndex() {
         const users = await this.userService.findAll();
@@ -39,7 +50,7 @@ export class UserController {
 
     @Post('users')
     public async create(@Body() body: any, @Res() res) {
-        this.client.send({cmd: 'users.create'}, body).subscribe({
+        this.client.send({ cmd: 'users.create' }, body).subscribe({
             next: () => {
                 res.status(HttpStatus.CREATED).send();
             },
@@ -53,26 +64,29 @@ export class UserController {
         });
     }
 
-    @MessagePattern({cmd: 'users.create'})
+    @MessagePattern({ cmd: 'users.create' })
     public async rpcCreate(data: CreateUserRequest) {
-        if (!data || (data && Object.keys(data).length === 0)) throw new RpcValidationException();
+        if (!data || (data && Object.keys(data).length === 0))
+            throw new RpcValidationException();
         await this.userService.create(data);
     }
 
     @Get('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
     public async show(@Param('userId') userId: number, @Req() req, @Res() res) {
-        this.client.send({cmd: 'users.show'}, {userId, user: req.user}).subscribe({
-            next: user => {
-                res.status(HttpStatus.OK).json(user);
-            },
-            error: error => {
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
-            }
-        });
+        this.client
+            .send({ cmd: 'users.show' }, { userId, user: req.user })
+            .subscribe({
+                next: user => {
+                    res.status(HttpStatus.OK).json(user);
+                },
+                error: error => {
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
+                }
+            });
     }
 
-    @MessagePattern({cmd: 'users.show'})
+    @MessagePattern({ cmd: 'users.show' })
     @UseGuards(RpcCheckLoggedInUserGuard)
     @UseInterceptors(CleanUserInterceptor)
     public async rpcShow(data: any) {
@@ -81,18 +95,25 @@ export class UserController {
 
     @Put('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
-    public async update(@Param('userId') userId: number, @Body() body: any, @Req() req, @Res() res) {
-        this.client.send({cmd: 'users.update'}, {userId, body, user: req.user}).subscribe({
-            next: () => {
-                res.status(HttpStatus.OK).send();
-            },
-            error: error => {
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-            }
-        });
+    public async update(
+        @Param('userId') userId: number,
+        @Body() body: any,
+        @Req() req,
+        @Res() res
+    ) {
+        this.client
+            .send({ cmd: 'users.update' }, { userId, body, user: req.user })
+            .subscribe({
+                next: () => {
+                    res.status(HttpStatus.OK).send();
+                },
+                error: error => {
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+                }
+            });
     }
 
-    @MessagePattern({cmd: 'users.update'})
+    @MessagePattern({ cmd: 'users.update' })
     @UseGuards(RpcCheckLoggedInUserGuard)
     public async rpcUpdate(data: any) {
         await this.userService.update(data.userId, data.body);
@@ -100,18 +121,24 @@ export class UserController {
 
     @Delete('users/:userId')
     @UseGuards(CheckLoggedInUserGuard)
-    public async delete(@Param('userId') userId: number, @Req() req, @Res() res) {
-        this.client.send({cmd: 'users.delete'}, {userId, user: req.user}).subscribe({
-            next: () => {
-                res.status(HttpStatus.OK).send();
-            },
-            error: error => {
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-            }
-        });
+    public async delete(
+        @Param('userId') userId: number,
+        @Req() req,
+        @Res() res
+    ) {
+        this.client
+            .send({ cmd: 'users.delete' }, { userId, user: req.user })
+            .subscribe({
+                next: () => {
+                    res.status(HttpStatus.OK).send();
+                },
+                error: error => {
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+                }
+            });
     }
 
-    @MessagePattern({cmd: 'users.delete'})
+    @MessagePattern({ cmd: 'users.delete' })
     @UseGuards(RpcCheckLoggedInUserGuard)
     public async rpcDelete(data: any) {
         await this.userService.delete(data.userId);

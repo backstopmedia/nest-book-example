@@ -22,10 +22,11 @@ describe('UserController', () => {
         const module = await Test.createTestingModule({
             imports: [DatabaseModule],
             controllers: [UserController],
-            components: [userProvider, UserService]
+            providers: [userProvider, UserService]
         })
-        .overrideComponent(UserService).useValue(userService)
-        .compile();
+            .overrideComponent(UserService)
+            .useValue(userService)
+            .compile();
 
         const app = module.createNestApplication(server);
         await app.init();
@@ -35,21 +36,21 @@ describe('UserController', () => {
         return request(server)
             .get('/users')
             .expect(200)
-            .expect(userService.findAll())
+            .expect(userService.findAll());
     });
 
     it('should return one user', async () => {
         return request(server)
             .get('/users/1')
             .expect(200)
-            .expect(userService.findById())
+            .expect(userService.findById());
     });
 
     it('should create a user', async () => {
         return request(server)
             .post('/users')
             .send(fakeUsers[0])
-            .expect(201)
+            .expect(201);
     });
 
     it('should update a user by id', async () => {

@@ -1,8 +1,15 @@
-import { Pipe, ValidationPipe, PipeTransform, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import {
+    Injectable,
+    ValidationPipe,
+    PipeTransform,
+    ArgumentMetadata,
+    BadRequestException
+} from '@nestjs/common';
 import { RpcValidationException } from '../exceptions/rpcValidation.exception';
 
-@Pipe()
-export class RpcValidationPipe extends ValidationPipe implements PipeTransform<any> {
+@Injectable()
+export class RpcValidationPipe extends ValidationPipe
+    implements PipeTransform<any> {
     public async transform(value: any, metadata: ArgumentMetadata) {
         try {
             await super.transform(value, metadata);

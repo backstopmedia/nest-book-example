@@ -1,9 +1,21 @@
-import { Column, CreatedAt, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import {
+    Column,
+    CreatedAt,
+    DataType,
+    ForeignKey,
+    Model,
+    Table
+} from 'sequelize-typescript';
 import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
 import { Entry } from '../entry/entry.entity';
 import { Keyword } from './keyword.entity';
 
-const tableOptions: IDefineOptions = { timestamp: true, tableName: 'keywords_entries', deletedAt: false, updatedAt: false } as IDefineOptions;
+const tableOptions: IDefineOptions = {
+    timestamp: true,
+    tableName: 'keywords_entries',
+    deletedAt: false,
+    updatedAt: false
+} as IDefineOptions;
 
 @Table(tableOptions)
 export class KeywordEntry extends Model<KeywordEntry> {
@@ -21,6 +33,5 @@ export class KeywordEntry extends Model<KeywordEntry> {
     })
     public entryId: number;
 
-    @CreatedAt
-    public createdAt: Date;
+    @CreatedAt public createdAt: Date;
 }

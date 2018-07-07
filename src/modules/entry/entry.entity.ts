@@ -18,7 +18,10 @@ import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptio
 import { User } from '../user/user.entity';
 import { Comment } from '../comment/comment.entity';
 
-const tableOptions: IDefineOptions = { timestamp: true, tableName: 'entries' } as IDefineOptions;
+const tableOptions: IDefineOptions = {
+    timestamp: true,
+    tableName: 'entries'
+} as IDefineOptions;
 
 @DefaultScope({
     include: [() => Comment]
@@ -32,38 +35,34 @@ export class Entry extends Model<Entry> {
 
     @Column({
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: false
     })
     public title: string;
 
     @Column({
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: false
     })
     public content: string;
 
     @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: false
     })
     public userId: number;
 
     @Column({
         type: DataType.TEXT,
-        allowNull: true,
-        
+        allowNull: true
     })
     public keywords: string;
 
-    @CreatedAt
-    public createdAt: Date;
+    @CreatedAt public createdAt: Date;
 
-    @UpdatedAt
-    public updatedAt: Date;
+    @UpdatedAt public updatedAt: Date;
 
-    @DeletedAt
-    public deletedAt: Date;
+    @DeletedAt public deletedAt: Date;
 
     @HasMany(() => Comment)
     public comments: Comment[];

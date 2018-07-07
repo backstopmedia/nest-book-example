@@ -1,4 +1,4 @@
-import { Test  } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { AuthenticationService } from '../../authentication.service';
 import { UserModule } from '../../../user/user.module';
 import { UserService } from '../../../user/user.service';
@@ -9,12 +9,15 @@ describe('AuthenticationService', () => {
     beforeEach(async () => {
         const module = await Test.createTestingModule({
             imports: [UserModule],
-            components: [AuthenticationService]
+            providers: [AuthenticationService]
         })
-        .overrideComponent(UserService).useValue({ findOne: () => true })
-        .compile();
+            .overrideComponent(UserService)
+            .useValue({ findOne: () => true })
+            .compile();
 
-        authenticationService = module.get<AuthenticationService>(AuthenticationService);
+        authenticationService = module.get<AuthenticationService>(
+            AuthenticationService
+        );
     });
 
     it('should return a token', async () => {
@@ -26,7 +29,10 @@ describe('AuthenticationService', () => {
     });
 
     it('should validate the user', async () => {
-        const result = await authenticationService.validateUser({ email: 'test@test.fr', password: 'password' });
+        const result = await authenticationService.validateUser({
+            email: 'test@test.fr',
+            password: 'password'
+        });
 
         expect(result).toBe(true);
     });

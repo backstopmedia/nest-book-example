@@ -8,20 +8,20 @@ import { environment } from './environments/environment';
 let app: INestApplication;
 
 async function bootstrap() {
-  if (environment.production) {
-    enableProdMode();
-  }
+    if (environment.production) {
+        enableProdMode();
+    }
 
-  app = await NestFactory.create(ApplicationModule);
-  app.useGlobalPipes(new ValidationPipe());
-  await app.listen(environment.port);
+    app = await NestFactory.create(ApplicationModule);
+    app.useGlobalPipes(new ValidationPipe());
+    await app.listen(environment.port);
 
-  console.log('Listening on port: ', environment.port);
+    console.log('Listening on port: ', environment.port);
 }
 bootstrap();
 
 export async function close() {
-  if (app) {
-    await app.close();
-  }
+    if (app) {
+        await app.close();
+    }
 }

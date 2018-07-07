@@ -3,13 +3,18 @@ import { KeywordService } from './keyword.service';
 
 @Controller()
 export class KeywordController {
-    constructor(
-        private readonly keywordService: KeywordService
-    ) { }
+    constructor(private readonly keywordService: KeywordService) {}
 
     @Get('keywords')
-    public async index(@Query('search') search: string, @Query('limit') limit: string, @Res() res) {
-        const keywords = await this.keywordService.findAll(search, Number(limit));
+    public async index(
+        @Query('search') search: string,
+        @Query('limit') limit: string,
+        @Res() res
+    ) {
+        const keywords = await this.keywordService.findAll(
+            search,
+            Number(limit)
+        );
         return res.status(HttpStatus.OK).json(keywords);
     }
 

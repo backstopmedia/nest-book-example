@@ -3,7 +3,7 @@ import { KeywordEntry } from './keywordEntry.entity';
 
 export const keywordProvider = {
     provide: 'KeywordRepository',
-    useValue: Keyword,
+    useValue: Keyword
 };
 
 export const keywordEntryProvider = {

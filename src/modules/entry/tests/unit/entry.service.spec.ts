@@ -5,6 +5,7 @@ import { entryProvider } from '../../entry.provider';
 import { EntryService } from '../../entry.service';
 import { IEntry } from '../../interfaces/index';
 import { Test } from '@nestjs/testing';
+import { DatabaseModule } from '../../../database/database.module';
 
 describe('EntryService', () => {
     let sequelizeInstance: any;
@@ -13,11 +14,8 @@ describe('EntryService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            components: [
-                entryProvider,
-                databaseProvider,
-                EntryService
-            ],
+            imports: [DatabaseModule],
+            providers: [entryProvider, EntryService]
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
@@ -28,7 +26,8 @@ describe('EntryService', () => {
     beforeEach(async () => {
         await sequelizeInstance.sync();
 
-        const [, userId] = await sequelizeInstance.query(`
+        const [, userId] = await sequelizeInstance.query(
+            `
             INSERT INTO users ("email", "firstName", "lastName", "password", "birthday", "createdAt", "updatedAt")
             values(
                 'test@test.fr', 
@@ -39,7 +38,9 @@ describe('EntryService', () => {
                 '${moment().format('YYYY-MM-DD')}',
                 '${moment().format('YYYY-MM-DD')}'
             );
-        `, { type: sequelizeInstance.QueryTypes.INSERT } );
+        `,
+            { type: sequelizeInstance.QueryTypes.INSERT }
+        );
         fakeEntries = utilities.generateFakeEntries(userId);
     });
 

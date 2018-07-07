@@ -16,10 +16,11 @@ describe('UserController', () => {
         const module = await Test.createTestingModule({
             imports: [UserModule],
             controllers: [AuthenticationController],
-            components: [AuthenticationService]
+            providers: [AuthenticationService]
         })
-        .overrideComponent(UserService).useValue(userService)
-        .compile();
+            .overrideComponent(UserService)
+            .useValue(userService)
+            .compile();
 
         const app = module.createNestApplication(server);
         await app.init();

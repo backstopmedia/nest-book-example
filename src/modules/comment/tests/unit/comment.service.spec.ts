@@ -5,6 +5,7 @@ import { CommentService } from '../../comment.service';
 import { databaseProvider } from '../../../database/database.provider';
 import { IComment } from '../../interfaces/index';
 import { Test } from '@nestjs/testing';
+import { DatabaseModule } from '../../../database/database.module';
 
 describe('CommentService', () => {
     let sequelizeInstance: any;
@@ -13,11 +14,8 @@ describe('CommentService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            components: [
-                commentProvider,
-                databaseProvider,
-                CommentService
-            ],
+            imports: [DatabaseModule],
+            providers: [commentProvider, CommentService]
         }).compile();
 
         sequelizeInstance = module.get<any>(databaseProvider.provide);
@@ -28,7 +26,8 @@ describe('CommentService', () => {
     beforeEach(async () => {
         await sequelizeInstance.sync();
 
-        const [, userId] = await sequelizeInstance.query(`
+        const [, userId] = await sequelizeInstance.query(
+            `
             INSERT INTO users ("email", "firstName", "lastName", "password", "birthday", "createdAt", "updatedAt")
             values(
                 'test@test.fr', 
@@ -39,9 +38,12 @@ describe('CommentService', () => {
                 '${moment().format('YYYY-MM-DD')}',
                 '${moment().format('YYYY-MM-DD')}'
             );
-        `, { type: sequelizeInstance.QueryTypes.INSERT } );
+        `,
+            { type: sequelizeInstance.QueryTypes.INSERT }
+        );
 
-        const [, entryId] = await sequelizeInstance.query(`
+        const [, entryId] = await sequelizeInstance.query(
+            `
             INSERT INTO entries ("title", "content", "userId", "createdAt", "updatedAt")
             values(
                 'entryTitle', 
@@ -50,9 +52,11 @@ describe('CommentService', () => {
                 '${moment().format('YYYY-MM-DD')}',
                 '${moment().format('YYYY-MM-DD')}'
             );
-        `, { type: sequelizeInstance.QueryTypes.INSERT } );
+        `,
+            { type: sequelizeInstance.QueryTypes.INSERT }
+        );
 
-        fakeComments = utilities.generateFakeComments(userId, entryId);
+        return (fakeComments = utilities.generateFakeComments(userId, entryId));
     });
 
     it('should create a new comment', async () => {
@@ -60,7 +64,6 @@ describe('CommentService', () => {
 
         expect(comment).not.toBeNull();
         expect(comment.body).toBe(fakeComments[0].body);
-        
     });
 
     it('should find all comments', async () => {
@@ -98,7 +101,6 @@ describe('CommentService', () => {
 
         expect(comment).not.toBeNull();
         expect(comment.body).toBe(fakeComments[0].body);
-        
     });
 
     it('should find comment by id', async () => {
@@ -117,7 +119,6 @@ describe('CommentService', () => {
 
         expect(comment).not.toBeNull();
         expect(comment.body).toBe(fakeComments[0].body);
-        
     });
 
     it('should delete comment by id', async () => {
@@ -156,6 +157,5 @@ describe('CommentService', () => {
 
         expect(comment).not.toBeNull();
         expect(comment.body).toBe('updatedTitle');
-        
     });
 });

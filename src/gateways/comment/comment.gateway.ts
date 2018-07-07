@@ -1,6 +1,12 @@
 import { AuthenticationGatewayMiddleware } from '../../shared/middlewares/authentication.gateway.middleware';
 import { CommentService } from '../../modules/comment/comment.service';
-import { SubscribeMessage, WebSocketGateway, WebSocketServer, WsException, WsResponse } from '@nestjs/websockets';
+import {
+    SubscribeMessage,
+    WebSocketGateway,
+    WebSocketServer,
+    WsException,
+    WsResponse
+} from '@nestjs/websockets';
 
 @WebSocketGateway({
     middlewares: [AuthenticationGatewayMiddleware]
@@ -8,14 +14,14 @@ import { SubscribeMessage, WebSocketGateway, WebSocketServer, WsException, WsRes
 export class CommentGateway {
     @WebSocketServer() server;
 
-    constructor(private readonly commentService: CommentService) { }
+    constructor(private readonly commentService: CommentService) {}
 
     @SubscribeMessage('indexComment')
     async index(client, data): Promise<WsResponse<any>> {
         if (!data.entryId) throw new WsException('Missing entry id.');
 
         const comments = await this.commentService.findAll({
-            where: {entryId: data.entryId}
+            where: { entryId: data.entryId }
         });
 
         return { event: 'indexComment', data: comments };

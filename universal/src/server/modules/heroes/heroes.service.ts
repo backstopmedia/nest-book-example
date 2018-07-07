@@ -4,55 +4,56 @@ import { HEROES } from './mock-heroes';
 
 @Component()
 export class HeroesService {
-  private heroCache: Hero[];
-  private nextId: number;
+    private heroCache: Hero[];
+    private nextId: number;
 
-  constructor() {
-    this.heroCache = HEROES;
-    this.nextId = this.heroCache.reduce((id, hero) => {
-      return Math.max(id, hero.id)
-    }, 0) + 1;
-  }
-
-  getHeroes(name?: string) {
-    if (name) {
-      const regex = new RegExp(name, 'gi');
-      return this.heroCache.filter(hero => regex.test(hero.name))
+    constructor() {
+        this.heroCache = HEROES;
+        this.nextId =
+            this.heroCache.reduce((id, hero) => {
+                return Math.max(id, hero.id);
+            }, 0) + 1;
     }
 
-    return this.heroCache;
-  }
+    getHeroes(name?: string) {
+        if (name) {
+            const regex = new RegExp(name, 'gi');
+            return this.heroCache.filter(hero => regex.test(hero.name));
+        }
 
-  createHero(name: string) {
-    const hero = new Hero();
-    hero.id = this.nextId++;
-    hero.name = name;
-
-    this.heroCache.push(hero);
-    return hero;
-  }
-
-  getHero(id: number) {
-    return this.heroCache.find(hero => hero.id === id);
-  }
-
-  updateHero(id: number, name: string) {
-    const hero = this.getHero(id);
-
-    if (!hero) {
-      throw new HttpException('Hero not found', HttpStatus.NOT_FOUND);
+        return this.heroCache;
     }
 
-    hero.name = name;
-  }
+    createHero(name: string) {
+        const hero = new Hero();
+        hero.id = this.nextId++;
+        hero.name = name;
 
-  deleteHero(id: number) {
-    const heroIndex = this.heroCache.findIndex(hero => hero.id === id);
-
-    if (heroIndex === -1) {
-      throw new HttpException('Hero not found', HttpStatus.NOT_FOUND);
+        this.heroCache.push(hero);
+        return hero;
     }
 
-    this.heroCache.splice(heroIndex, 1);
-  }
+    getHero(id: number) {
+        return this.heroCache.find(hero => hero.id === id);
+    }
+
+    updateHero(id: number, name: string) {
+        const hero = this.getHero(id);
+
+        if (!hero) {
+            throw new HttpException('Hero not found', HttpStatus.NOT_FOUND);
+        }
+
+        hero.name = name;
+    }
+
+    deleteHero(id: number) {
+        const heroIndex = this.heroCache.findIndex(hero => hero.id === id);
+
+        if (heroIndex === -1) {
+            throw new HttpException('Hero not found', HttpStatus.NOT_FOUND);
+        }
+
+        this.heroCache.splice(heroIndex, 1);
+    }
 }

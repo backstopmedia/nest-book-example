@@ -1,13 +1,15 @@
-import { Component, Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IUser, IUserService } from './interfaces/index';
 import { User } from './user.entity';
 import { DatabaseUtilitiesService } from '../database/database-utilities.service';
 
-@Component()
+@Injectable()
 export class UserService implements IUserService {
-    constructor(@Inject('UserRepository') private readonly UserRepository: typeof User,
-                @Inject('SequelizeInstance') private readonly sequelizeInstance,
-                private readonly databaseUtilitiesService: DatabaseUtilitiesService) { }
+    constructor(
+        @Inject('UserRepository') private readonly UserRepository: typeof User,
+        @Inject('SequelizeInstance') private readonly sequelizeInstance,
+        private readonly databaseUtilitiesService: DatabaseUtilitiesService
+    ) {}
 
     public async findAll(options?: object): Promise<Array<User>> {
         return await this.UserRepository.findAll<User>(options);
@@ -25,20 +27,22 @@ export class UserService implements IUserService {
         return await this.sequelizeInstance.transaction(async transaction => {
             return await this.UserRepository.create<User>(user, {
                 returning: true,
-                transaction,
+                transaction
             });
         });
     }
 
     public async update(id: number, newValue: IUser): Promise<User | null> {
         return await this.sequelizeInstance.transaction(async transaction => {
-            let user = await this.UserRepository.findById<User>(id, { transaction });
+            let user = await this.UserRepository.findById<User>(id, {
+                transaction
+            });
             if (!user) throw new Error('The user was not found.');
 
             user = this.databaseUtilitiesService.assign(user, newValue);
             return await user.save({
                 returning: true,
-                transaction,
+                transaction
             });
         });
     }
@@ -47,7 +51,7 @@ export class UserService implements IUserService {
         return await this.sequelizeInstance.transaction(async transaction => {
             return await this.UserRepository.destroy({
                 where: { id },
-                transaction,
+                transaction
             });
         });
     }

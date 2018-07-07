@@ -1,5 +1,3 @@
 import { UpdateKeywordLinksEventHandler } from './updateKeywordLinks.handler';
 
-export const keywordEventHandlers = [
-    UpdateKeywordLinksEventHandler
-];
+export const keywordEventHandlers = [UpdateKeywordLinksEventHandler];

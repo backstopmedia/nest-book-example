@@ -6,11 +6,14 @@ import { UserModule } from '../user/user.module';
 @Module({})
 export class AuthenticationModule {
     static forRoot(strategy?: 'jwt'): DynamicModule {
-        strategy = strategy ? strategy :'jwt';
+        strategy = strategy ? strategy : 'jwt';
         const strategyProvider = {
             provide: 'Strategy',
-            useFactory: async (authenticationService: AuthenticationService) => {
-                const Strategy = (await import (`./passports/${strategy}.strategy`)).default;
+            useFactory: async (
+                authenticationService: AuthenticationService
+            ) => {
+                const Strategy = (await import(`./passports/${strategy}.strategy`))
+                    .default;
                 return new Strategy(authenticationService);
             },
             inject: [AuthenticationService]
@@ -19,7 +22,7 @@ export class AuthenticationModule {
             module: AuthenticationModule,
             imports: [UserModule],
             controllers: [AuthenticationController],
-            components: [AuthenticationService, strategyProvider],
+            providers: [AuthenticationService, strategyProvider],
             exports: [strategyProvider]
         };
     }

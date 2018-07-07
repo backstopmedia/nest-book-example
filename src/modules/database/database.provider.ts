@@ -23,5 +23,5 @@ export const databaseProvider = {
         sequelize.addModels([User, Entry, Comment, Keyword, KeywordEntry]);
         /* await sequelize.sync(); */
         return sequelize;
-    },
+    }
 };

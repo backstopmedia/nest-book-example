@@ -4,6 +4,6 @@ import { UserModule } from '../../modules/user/user.module';
 
 @Module({
     imports: [UserModule],
-    components: [UserGateway]
+    providers: [UserGateway]
 })
-export class UserGatewayModule { }
+export class UserGatewayModule {}

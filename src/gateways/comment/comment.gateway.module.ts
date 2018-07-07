@@ -5,6 +5,6 @@ import { UserModule } from '../../modules/user/user.module';
 
 @Module({
     imports: [UserModule, CommentModule],
-    components: [CommentGateway]
+    providers: [CommentGateway]
 })
-export class CommentGatewayModule { }
+export class CommentGatewayModule {}

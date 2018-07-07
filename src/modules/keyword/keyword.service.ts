@@ -1,16 +1,23 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IFindOptions } from 'sequelize-typescript';
 import { col, fn, Op } from 'sequelize';
 import { IKeywordService } from './interfaces/index';
 import { Keyword } from './keyword.entity';
 import { KeywordEntry } from './keywordEntry.entity';
 
-@Component()
+@Injectable()
 export class KeywordService implements IKeywordService {
-    constructor(@Inject('KeywordRepository') private readonly keywordRepository: typeof Keyword,
-                @Inject('KeywordEntryRepository') private readonly keywordEntryRepository: typeof KeywordEntry) { }
+    constructor(
+        @Inject('KeywordRepository')
+        private readonly keywordRepository: typeof Keyword,
+        @Inject('KeywordEntryRepository')
+        private readonly keywordEntryRepository: typeof KeywordEntry
+    ) {}
 
-    public async findAll(search?: string, limit?: number): Promise<Array<Keyword>> {
+    public async findAll(
+        search?: string,
+        limit?: number
+    ): Promise<Array<Keyword>> {
         let options: IFindOptions<Keyword> = {};
 
         if (search) {
@@ -25,7 +32,7 @@ export class KeywordService implements IKeywordService {
                     }
                 },
                 limit
-            }
+            };
         }
 
         return await this.keywordRepository.findAll<Keyword>(options);
@@ -37,17 +44,21 @@ export class KeywordService implements IKeywordService {
 
     public async findHotLinks(): Promise<Array<Keyword>> {
         // Find the latest 5 keyword links
-        const latest5 = await this.keywordEntryRepository.findAll<KeywordEntry>({
-            attributes: {
-                exclude: ['entryId', 'createdAt']
-            },
-            group: ['keywordId'],
-            order: [[fn('max', col('createdAt')), 'DESC']],
-            limit: 5
-        } as IFindOptions<any>);
+        const latest5 = await this.keywordEntryRepository.findAll<KeywordEntry>(
+            {
+                attributes: {
+                    exclude: ['entryId', 'createdAt']
+                },
+                group: ['keywordId'],
+                order: [[fn('max', col('createdAt')), 'DESC']],
+                limit: 5
+            } as IFindOptions<any>
+        );
 
         // Find the 5 keywords with the most links
-        const biggest5 = await this.keywordEntryRepository.findAll<KeywordEntry>({
+        const biggest5 = await this.keywordEntryRepository.findAll<
+            KeywordEntry
+        >({
             attributes: {
                 exclude: ['entryId', 'createdAt']
             },
@@ -57,14 +68,18 @@ export class KeywordService implements IKeywordService {
             where: {
                 keywordId: {
                     // Filter out keywords that already exist in the latest5
-                    [Op.notIn]: latest5.map(keywordEntry => keywordEntry.keywordId)
+                    [Op.notIn]: latest5.map(
+                        keywordEntry => keywordEntry.keywordId
+                    )
                 }
             }
         } as IFindOptions<any>);
-        
+
         // Load the keyword table data
         const result = await Promise.all(
-            [...latest5, ...biggest5].map(keywordEntry => this.findById(keywordEntry.keywordId))
+            [...latest5, ...biggest5].map(keywordEntry =>
+                this.findById(keywordEntry.keywordId)
+            )
         );
 
         return result;

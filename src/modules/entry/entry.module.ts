@@ -2,16 +2,21 @@ import { EntryController } from './entry.controller';
 import { entryProvider } from './entry.provider';
 import { EntryService } from './entry.service';
 import { FetchEntryMiddleware } from '../../shared/middlewares/fetch-entry.middleware';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
-import { Module, NestModule, RequestMethod, OnModuleInit } from '@nestjs/common';
-import { CQRSModule, CommandBus } from '@nestjs/cqrs';
+import { MiddlewareConsumer } from '@nestjs/common/interfaces/middleware';
+import {
+    Module,
+    NestModule,
+    OnModuleInit,
+    RequestMethod
+} from '@nestjs/common';
+import { CommandBus, CQRSModule } from '@nestjs/cqrs';
 import { entryCommandHandlers } from './commands/handlers/index';
 import { ModuleRef } from '@nestjs/core';
 
 @Module({
     imports: [CQRSModule],
     controllers: [EntryController],
-    components: [entryProvider, EntryService, ...entryCommandHandlers],
+    providers: [entryProvider, EntryService, ...entryCommandHandlers],
     exports: [EntryService]
 })
 export class EntryModule implements NestModule, OnModuleInit {
@@ -20,13 +25,14 @@ export class EntryModule implements NestModule, OnModuleInit {
         private readonly commandBus: CommandBus
     ) {}
 
-    public configure(consumer: MiddlewaresConsumer) {
+    public configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(FetchEntryMiddleware)
             .forRoutes(
                 { path: 'entries/:entryId', method: RequestMethod.GET },
                 { path: 'entries/:entryId', method: RequestMethod.PUT },
-                { path: 'entries/:entryId', method: RequestMethod.DELETE });
+                { path: 'entries/:entryId', method: RequestMethod.DELETE }
+            );
     }
 
     public onModuleInit() {

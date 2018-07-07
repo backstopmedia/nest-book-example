@@ -12,9 +12,12 @@ async function bootstrapApp() {
 }
 
 async function bootstrapRpc() {
-    const rpcApp = await NestFactory.createMicroservice(AppModule, microserviceServerConfig('nestjs_book'));
+    const rpcApp = await NestFactory.createMicroservice(
+        AppModule,
+        microserviceServerConfig('nestjs_book')
+    );
     rpcApp.useGlobalFilters(new RpcValidationFilter());
-    
+
     await rpcApp.listenAsync();
 }
 

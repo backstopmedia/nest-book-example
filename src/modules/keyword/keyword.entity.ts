@@ -16,7 +16,10 @@ import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptio
 import { Entry } from '../entry/entry.entity';
 import { KeywordEntry } from './keywordEntry.entity';
 
-const tableOptions: IDefineOptions = { timestamp: true, tableName: 'keywords' } as IDefineOptions;
+const tableOptions: IDefineOptions = {
+    timestamp: true,
+    tableName: 'keywords'
+} as IDefineOptions;
 
 @DefaultScope({
     include: [() => Entry]
@@ -33,25 +36,24 @@ export class Keyword extends Model<Keyword> {
         allowNull: false,
         validate: {
             isUnique: async (value: string, next: any): Promise<any> => {
-                const isExist = await Keyword.findOne({ where: { keyword: value } });
+                const isExist = await Keyword.findOne({
+                    where: { keyword: value }
+                });
                 if (isExist) {
                     const error = new Error('The keyword already exists.');
                     next(error);
                 }
                 next();
-            },
-        },
+            }
+        }
     })
     public keyword: string;
 
-    @CreatedAt
-    public createdAt: Date;
+    @CreatedAt public createdAt: Date;
 
-    @UpdatedAt
-    public updatedAt: Date;
+    @UpdatedAt public updatedAt: Date;
 
-    @DeletedAt
-    public deletedAt: Date;
+    @DeletedAt public deletedAt: Date;
 
     @BelongsToMany(() => Entry, () => KeywordEntry)
     public entries: Entry[];

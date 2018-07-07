@@ -1,11 +1,11 @@
 import * as jwt from 'jsonwebtoken';
 import { GatewayMiddleware, WsException } from '@nestjs/websockets';
-import { Middleware } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserService } from '../../modules/user/user.service';
 
-@Middleware()
+@Injectable()
 export class WsAuthenticationGatewayMiddleware implements GatewayMiddleware {
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService) {}
     resolve() {
         return (req, next) => {
             const matches = req.url.match(/token=([^&].*)/);
@@ -18,10 +18,12 @@ export class WsAuthenticationGatewayMiddleware implements GatewayMiddleware {
             return jwt.verify(req.token, 'secret', async (err, payload) => {
                 if (err) throw new WsException(err);
 
-                const user = await this.userService.findOne({ where: { email: payload.email }});
+                const user = await this.userService.findOne({
+                    where: { email: payload.email }
+                });
                 req.user = user;
                 return next(true);
             });
-        }
+        };
     }
 }

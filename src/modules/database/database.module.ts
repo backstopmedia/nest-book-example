@@ -4,7 +4,7 @@ import { DatabaseUtilitiesService } from './database-utilities.service';
 
 @Global()
 @Module({
-    components: [databaseProvider, DatabaseUtilitiesService],
-    exports: [databaseProvider, DatabaseUtilitiesService],
+    providers: [databaseProvider, DatabaseUtilitiesService],
+    exports: [databaseProvider, DatabaseUtilitiesService]
 })
 export class DatabaseModule {}

@@ -5,13 +5,19 @@ import { LinkKeywordEntryCommand } from '../impl/linkKeywordEntry.command';
 import { Keyword } from '../../keyword.entity';
 
 @CommandHandler(LinkKeywordEntryCommand)
-export class LinkKeywordEntryCommandHandler implements ICommandHandler<LinkKeywordEntryCommand> {
+export class LinkKeywordEntryCommandHandler
+    implements ICommandHandler<LinkKeywordEntryCommand> {
     constructor(
-        @Inject('KeywordRepository') private readonly keywordRepository: typeof Keyword,
-        @Inject('SequelizeInstance') private readonly sequelizeInstance: Sequelize
-    ) { }
+        @Inject('KeywordRepository')
+        private readonly keywordRepository: typeof Keyword,
+        @Inject('SequelizeInstance')
+        private readonly sequelizeInstance: Sequelize
+    ) {}
 
-    async execute(command: LinkKeywordEntryCommand, resolve: (error?: Error) => void) {
+    async execute(
+        command: LinkKeywordEntryCommand,
+        resolve: (error?: Error) => void
+    ) {
         let caught: Error;
 
         try {
@@ -23,7 +29,9 @@ export class LinkKeywordEntryCommandHandler implements ICommandHandler<LinkKeywo
                     transaction
                 });
 
-                await keyword[0].$add('entries', command.entryId, { transaction });
+                await keyword[0].$add('entries', command.entryId, {
+                    transaction
+                });
             });
         } catch (error) {
             caught = error;

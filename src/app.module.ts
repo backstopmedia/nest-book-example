@@ -6,7 +6,7 @@ import { CommentModule } from './modules/comment/comment.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { EntryController } from './modules/entry/entry.controller';
 import { EntryModule } from './modules/entry/entry.module';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
+import { MiddlewareConsumer } from '@nestjs/common/interfaces/middleware';
 import { Module, NestModule, RequestMethod } from '@nestjs/common';
 import { strategy } from './shared/config/passport-strategy.config';
 import { UserGatewayModule } from './gateways/user/user.gateway.module';
@@ -25,10 +25,10 @@ import { KeywordModule } from './modules/keyword/keyword.module';
         KeywordModule
     ],
     controllers: [],
-    components: [],
+    providers: []
 })
 export class AppModule implements NestModule {
-    public configure(consumer: MiddlewaresConsumer) {
+    public configure(consumer: MiddlewareConsumer) {
         const userControllerAuthenticatedRoutes = [
             { path: '/users', method: RequestMethod.GET },
             { path: '/users/:id', method: RequestMethod.GET },

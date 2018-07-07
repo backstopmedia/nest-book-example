@@ -10,6 +10,6 @@ export const databaseConfig: IDatabaseConfig = {
         dialect: 'postgres',
         logging: false,
         force: true,
-        timezone: '+02:00',
+        timezone: '+02:00'
     }
 };
