@@ -5,6 +5,6 @@ import { EntriesService } from './entry.service';
 @Module({
   // imports: [TypeOrmModule.forFeature([Entry])],
   controllers: [EntriesController],
-  components: [EntriesService]
+  providers: [EntriesService]
 })
 export class EntriesModule {}
