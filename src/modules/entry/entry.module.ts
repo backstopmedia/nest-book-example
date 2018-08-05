@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
-import { EntrySchema } from './entry.schema';
 import { EntriesController } from './entry.controller';
+import { EntrySchema } from './entry.schema';
 import { EntriesService } from './entry.service';
 
 @Module({
@@ -10,6 +9,6 @@ import { EntriesService } from './entry.service';
     MongooseModule.forFeature([{ name: 'Entry', schema: EntrySchema }])
   ],
   controllers: [EntriesController],
-  components: [EntriesService]
+  providers: [EntriesService]
 })
 export class EntriesModule {}

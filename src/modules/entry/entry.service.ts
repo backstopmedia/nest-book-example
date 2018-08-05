@@ -1,14 +1,12 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-
-import { EntrySchema } from './entry.schema';
 import { Entry } from './entry.interface';
 
-@Component()
+@Injectable()
 export class EntriesService {
   constructor(
-    @InjectModel(EntrySchema) private readonly entryModel: Model<Entry>
+    @InjectModel('Entry') private readonly entryModel: Model<Entry>
   ) {}
 
   // this method retrieves all entries
