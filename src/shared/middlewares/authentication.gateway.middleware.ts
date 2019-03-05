@@ -1,10 +1,11 @@
 import * as jwt from 'jsonwebtoken';
-import { GatewayMiddleware, WsException } from '@nestjs/websockets';
+import { WsException } from '@nestjs/websockets';
+import { NestMiddleware } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../../modules/user/user.service';
 
 @Injectable()
-export class AuthenticationGatewayMiddleware implements GatewayMiddleware {
+export class AuthenticationGatewayMiddleware implements NestMiddleware {
     constructor(private readonly userService: UserService) {}
     resolve() {
         return (socket, next) => {
